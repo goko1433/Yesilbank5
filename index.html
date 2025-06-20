@@ -55,6 +55,8 @@
     .btn-success:hover { background-color: var(--app-primary-green-dark); border-color: var(--app-primary-green-dark); color: var(--app-white); }
     .btn-secondary { background-color: #6c757d; border-color: #6c757d; color: var(--app-white); } 
     .btn-secondary:hover { background-color: #5a6268; border-color: #545b62; color: var(--app-white); }
+    .btn-info { background-color: var(--app-info); border-color: var(--app-info); color: var(--app-white); }
+    .btn-info:hover { background-color: #025a8e; border-color: #02507e; color: var(--app-white); }
     .btn-outline-light { border-color: var(--app-primary-green); color: var(--app-primary-green); }
     .btn-outline-light:hover { background-color: var(--app-primary-green); color: var(--app-white); }
     body.dark-mode .btn-outline-light { border-color: var(--app-light-green-bg); color: var(--app-light-green-bg); }
@@ -202,41 +204,41 @@
       <div class="row">
         <div class="col-lg-6 mb-3 mb-lg-0">
             <div class="card p-3 h-100 d-flex flex-column"> 
-                <h4 data-translate="currentStatusTitle">📈 Anlık Birikim</h4>
-                <h2 id="currentAmount" class="display-5 fw-bold">0,00 TL</h2>
-                <h6 id="usdValue" class="text-muted mb-2">USD Karşılığı: -</h6>
-                <h6 id="remainingTime" aria-live="polite" class="text-muted small">⏳ <span data-translate="elapsedTime">Geçen süre</span>: -</h6>
-                <h6 id="hourlyRateDisplay" class="text-muted small mt-1"><span data-translate="hourlyRateLabel">Planlanan Saatlik Artış</span>: -</h6>
-                <div class="progress my-3" role="progressbar" aria-label="Genel birikim ilerlemesi" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-bar bg-success" id="progressBarElem" style="width: 0%">0%</div>
-                </div>
-                <div class="mt-auto"> 
-                     <button class="btn btn-primary w-100 btn-lg" onclick="SavingsTracker.transferToVault()"> 
-                        <i class="fas fa-hand-holding-usd"></i> <span data-translate="transferToVaultBtn">Kasaya Aktar</span>
-                    </button>
-                </div>
+              <h4 data-translate="currentStatusTitle">📈 Anlık Birikim</h4>
+              <h2 id="currentAmount" class="display-5 fw-bold">0,00 TL</h2>
+              <h6 id="usdValue" class="text-muted mb-2">USD Karşılığı: -</h6>
+              <h6 id="remainingTime" aria-live="polite" class="text-muted small">⏳ <span data-translate="elapsedTime">Geçen süre</span>: -</h6>
+              <h6 id="hourlyRateDisplay" class="text-muted small mt-1"><span data-translate="hourlyRateLabel">Planlanan Saatlik Artış</span>: -</h6>
+              <div class="progress my-3" role="progressbar" aria-label="Genel birikim ilerlemesi" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar bg-success" id="progressBarElem" style="width: 0%">0%</div>
+              </div>
+              <div class="mt-auto"> 
+                  <button class="btn btn-primary w-100 btn-lg" onclick="SavingsTracker.transferToVault()"> 
+                    <i class="fas fa-hand-holding-usd"></i> <span data-translate="transferToVaultBtn">Kasaya Aktar</span>
+                  </button>
+              </div>
             </div>
         </div>
         <div class="col-lg-6">
             <div class="card p-3 mb-3">
-                <h4 data-translate="manualAddLabel">💵 Manuel Ekleme</h4>
-                <div class="input-group mb-2">
-                    <input type="number" id="manualAmount" class="form-control" placeholder="TL miktarı" data-translate-placeholder="tlAmountPlaceholder">
-                    <button class="btn btn-warning" onclick="SavingsTracker.addManualAmount()"><i class="fas fa-plus"></i> <span data-translate="addBtn">Ekle</span></button>
-                </div>
-                <div>
-                    <button class="btn btn-outline-secondary btn-sm me-1" onclick="SavingsTracker.quickAdd(100)">+100 TL</button>
-                    <button class="btn btn-outline-secondary btn-sm me-1" onclick="SavingsTracker.quickAdd(500)">+500 TL</button>
-                    <button class="btn btn-outline-secondary btn-sm" onclick="SavingsTracker.quickAdd(1000)">+1000 TL</button>
-                </div>
+              <h4 data-translate="manualAddLabel">💵 Manuel Ekleme</h4>
+              <div class="input-group mb-2">
+                  <input type="number" id="manualAmount" class="form-control" placeholder="TL miktarı" data-translate-placeholder="tlAmountPlaceholder">
+                  <button class="btn btn-warning" onclick="SavingsTracker.addManualAmount()"><i class="fas fa-plus"></i> <span data-translate="addBtn">Ekle</span></button>
+              </div>
+              <div>
+                  <button class="btn btn-outline-secondary btn-sm me-1" onclick="SavingsTracker.quickAdd(100)">+100 TL</button>
+                  <button class="btn btn-outline-secondary btn-sm me-1" onclick="SavingsTracker.quickAdd(500)">+500 TL</button>
+                  <button class="btn btn-outline-secondary btn-sm" onclick="SavingsTracker.quickAdd(1000)">+1000 TL</button>
+              </div>
             </div>
              <div class="card p-3">
-                <h4 data-translate="levelsTitle">🏆 Seviyeler</h4>
-                <div id="nextLevelText"><span data-translate="nextLevelRemaining">Sonraki seviyeye</span>: -</div>
-                <div class="progress" id="nextLevelProgress" role="progressbar" aria-label="Sonraki seviye ilerlemesi" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-bar bg-info" id="levelProgressBar" style="width: 0%"></div>
-                </div>
-                <div id="badgeContainer" class="mt-3 d-flex flex-wrap"></div>
+              <h4 data-translate="levelsTitle">🏆 Seviyeler</h4>
+              <div id="nextLevelText"><span data-translate="nextLevelRemaining">Sonraki seviyeye</span>: -</div>
+              <div class="progress" id="nextLevelProgress" role="progressbar" aria-label="Sonraki seviye ilerlemesi" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar bg-info" id="levelProgressBar" style="width: 0%"></div>
+              </div>
+              <div id="badgeContainer" class="mt-3 d-flex flex-wrap"></div>
             </div>
         </div>
       </div>
@@ -343,11 +345,14 @@
             </div>
              <hr>
             <h5 class="mt-4" data-translate="dataManagementTitle"><i class="fas fa-database"></i> Veri Yönetimi</h5>
-            <div class="d-grid gap-2 d-sm-flex mt-2">
-                <button class="btn btn-secondary" onclick="SavingsTracker.exportData()">
+            <div class="d-grid gap-2 d-sm-flex mt-2 flex-wrap">
+                <button id="manualSaveBtn" class="btn btn-info mb-2 mb-sm-0">
+                    <i class="fas fa-save"></i> <span data-translate="manualSaveBtn">Manuel Kaydet</span>
+                </button>
+                <button class="btn btn-secondary mb-2 mb-sm-0" onclick="SavingsTracker.exportData()">
                     <i class="fas fa-download"></i> <span data-translate="exportDataBtn">Veriyi Dışa Aktar</span>
                 </button>
-                <button class="btn btn-info" onclick="SavingsTracker.shareProgress()">
+                <button class="btn btn-primary" onclick="SavingsTracker.shareProgress()">
                     <i class="fas fa-share-alt"></i> <span data-translate="shareProgressBtn">İlerlemeyi Paylaş</span>
                 </button>
             </div>
@@ -399,7 +404,7 @@
         API_URL_USD_TRY: 'https://api.frankfurter.app/latest?from=USD&to=TRY',
         DEFAULT_LANGUAGE: 'tr',
         DEFAULT_THEME: 'light',
-        SAVE_STATE_INTERVAL: 5000,
+        SAVE_STATE_INTERVAL: 2000, // GÜNCELLENDİ: 5 saniyeden 2 saniyeye düşürüldü.
       },
       state: {
         timer: null, usdRate: 0, badges: [], chartInstance: null,
@@ -471,9 +476,9 @@
             budgetCategoryRemoved: "{category} bütçeden silindi.", transactionTypeManual: "Manuel Ekleme", transactionTypeQuick: "Hızlı Ekleme", transactionTypeInitial: "Başlangıç Tutarı", transactionTypeDateRange: "Tarih Aralığı Katkısı",
             transactionTypeVaultTransfer: "Kasaya Transfer", dataExported: "Veriler 'yesilbanka_birikim_yedek.json' olarak indirildi.", noDataToExport: "Dışa aktarılacak veri yok.", confirmResetBirikimMsg: "Mevcut birikim planı sıfırlanacak (kasa ve diğer ayarlar etkilenmeyecek). Emin misiniz?",
             confirmResetAllMsg: "TÜM VERİLER (kasa dahil) kalıcı olarak silinecek! Emin misiniz?", contributionCalculated: "Seçili aralık katkısı: {autoSave}", selectDateRangeFirst: "Önce tarih aralığı seçin!",
-            startSystemFirst: "Önce birikim planını başlatın!", invalidDateFormat: "Geçersiz tarih formatı!", endDateAfterStart: "Bitiş, başlangıçtan sonra olmalı!", saved: "Kaydedildi!", languageChanged: "Dil değiştirildi.",
+            startSystemFirst: "Önce birikim planını başlatın!", invalidDateFormat: "Geçersiz tarih formatı!", endDateAfterStart: "Bitiş, başlangıçtan sonra olmalı!", saved: "Veri kaydedildi!", languageChanged: "Dil değiştirildi.",
             quickAddAmount: "+{amount} TL", delete: "Sil", appTitle: "Yeşil Banka - Birikim Takip", transferToVaultBtn: "Kasaya Aktar", vaultTransferSuccess: "{amount} kasaya başarıyla aktarıldı!",
-            birikimResetForNewCycle: "Birikim sayacı yeni döngü için sıfırlandı.", noActiveBirikimToTransfer: "Kasaya aktarılacak aktif bir birikim bulunmuyor.", birikimPlanReset: "Birikim planı sıfırlandı."
+            birikimResetForNewCycle: "Birikim sayacı yeni döngü için sıfırlandı.", noActiveBirikimToTransfer: "Kasaya aktarılacak aktif bir birikim bulunmuyor.", birikimPlanReset: "Birikim planı sıfırlandı.", manualSaveBtn: "Manuel Kaydet",
           },
           en: { 
             kasaUsdEquivalent: "USD Equivalent", appRealTitle: "Green Bank Savings", birikimTab: "Tracker", kasaTab: "Vault", butceTab: "Budget", islemlerTab: "Transactions", ayarlarTab: "Settings",
@@ -492,9 +497,9 @@
             transactionTypeManual: "Manual Add", transactionTypeQuick: "Quick Add", transactionTypeInitial: "Initial Amount", transactionTypeDateRange: "Date Range Contribution", transactionTypeVaultTransfer: "Transfer to Vault",
             dataExported: "Data downloaded as 'greenbank_savings_backup.json'.", noDataToExport: "No data to export.", confirmResetBirikimMsg: "Current savings plan will be reset (vault and other settings will not be affected). Are you sure?",
             confirmResetAllMsg: "ALL DATA (including vault) will be permanently deleted! Are you sure?", contributionCalculated: "Selected range contribution: {autoSave}", selectDateRangeFirst: "Select date range first!",
-            startSystemFirst: "Start a savings plan first!", invalidDateFormat: "Invalid date format!", endDateAfterStart: "End date must be after start!", saved: "Saved!", languageChanged: "Language changed.",
+            startSystemFirst: "Start a savings plan first!", invalidDateFormat: "Invalid date format!", endDateAfterStart: "End date must be after start!", saved: "Data saved!", languageChanged: "Language changed.",
             quickAddAmount: "+{amount} TRY", delete: "Delete", appTitle: "Green Bank - Savings Tracker", transferToVaultBtn: "Transfer to Vault", vaultTransferSuccess: "{amount} successfully transferred to vault!",
-            birikimResetForNewCycle: "Savings tracker reset for a new cycle.", noActiveBirikimToTransfer: "No active savings to transfer to vault.", birikimPlanReset: "Savings plan has been reset."
+            birikimResetForNewCycle: "Savings tracker reset for a new cycle.", noActiveBirikimToTransfer: "No active savings to transfer to vault.", birikimPlanReset: "Savings plan has been reset.", manualSaveBtn: "Manual Save",
           }
         },
         translate(key, params = {}) { 
@@ -570,6 +575,7 @@
       },
 
       async saveAllState() { 
+        if (!this.state.currentSavingData) return; // Kaydedilecek veri yoksa çık
         await this.storage.set('currentSavingData', this.state.currentSavingData);
         await this.storage.set('transactions', this.state.transactions); 
         await this.storage.set('budgetItems', this.state.budgetItems);
@@ -606,6 +612,7 @@
           budgetTableBody: document.getElementById('budgetTable'), newBudgetCategory: document.getElementById('newBudgetCategory'),
           newBudgetAmount: document.getElementById('newBudgetAmount'), totalBudgetAmountDisplay: document.getElementById('totalBudgetAmount'),
           transactionHistoryTableBody: document.getElementById('transactionHistoryTable'),
+          manualSaveBtn: document.getElementById('manualSaveBtn'), // YENİ EKLENDİ
         };
       },
       initTabs() { 
@@ -644,8 +651,23 @@
           await this.storage.set('currentLanguage', this.state.currentLanguage);
           this.i18n.applyTranslations(); this.showPopup(this.i18n.translate('languageChanged'), 'info');
         });
-         window.addEventListener('beforeunload', () => {
+
+        // YENİ: Manuel Kaydet Butonu Olayı
+        this.elements.manualSaveBtn.addEventListener('click', async () => {
+            await this.saveAllState();
+            this.showPopup(this.i18n.translate('saved'), 'success');
+        });
+        
+        // GÜNCELLENDİ: Mobil cihazlar ve iOS için daha güvenilir kaydetme yöntemleri
+        window.addEventListener('beforeunload', () => {
             if (this.state.currentSavingData) this.saveAllState();
+        });
+
+        // YENİ: Uygulama arka plana atıldığında veya sekme değiştiğinde kaydet. BU EN ÖNEMLİ DÜZELTME.
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') {
+                this.saveAllState();
+            }
         });
       },
       applyLanguage() { 
@@ -674,7 +696,7 @@
       applyThemeButtonText() { 
         const themeBtn = this.elements.themeToggleBtn;
         if (themeBtn) { themeBtn.querySelector('i').className = this.state.currentTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-                       themeBtn.querySelector('span').innerHTML = this.i18n.translate('toggleTheme'); }
+                        themeBtn.querySelector('span').innerHTML = this.i18n.translate('toggleTheme'); }
       },
       async toggleTheme() { 
         this.state.currentTheme = this.state.currentTheme === 'light' ? 'dark' : 'light';
@@ -723,7 +745,7 @@
         const i = parseFloat(this.elements.increaseAmount.value); 
         const m = this.elements.mode.value;
         const currentUsdRate = parseFloat(this.elements.usdRate.value) || this.state.usdRate || 0;
-        this.state.currentSavingData = { startAmount: s, targetAmount: t, increaseAmount: i, mode: m, startTime: Date.now(), usdRate: currentUsdRate, manualAddedTotal: 0, dateRangeContributionTotal: 0, lastElapsedTime: 0, targetReached: false, };
+        this.state.currentSavingData = { startAmount: s, targetAmount: t, increaseAmount: i, mode: m, startTime: Date.now(), usdRate: currentUsdRate, manualAddedTotal: 0, dateRangeContributionTotal: 0, targetReached: false, };
         this.state.isTargetModalShown = false; 
         if (s > 0) { this.addTransaction(s, this.i18n.translate('transactionTypeInitial') + " (Yeni Plan)", new Date(this.state.currentSavingData.startTime)); }
         if (this.state.timer) clearInterval(this.state.timer);
@@ -740,13 +762,13 @@
         const oldIncrease = this.state.currentSavingData?.increaseAmount; 
         const oldMode = this.state.currentSavingData?.mode;
         const currentUsdRate = this.state.currentSavingData?.usdRate || this.state.usdRate || 0;
-        this.state.currentSavingData = { startAmount: 0, targetAmount: oldPlanTarget || 100000, increaseAmount: oldIncrease || 1000, mode: oldMode || 'monthly', startTime: Date.now(), usdRate: currentUsdRate, manualAddedTotal: 0, dateRangeContributionTotal: 0, lastElapsedTime: 0, targetReached: false, };
+        this.state.currentSavingData = { startAmount: 0, targetAmount: oldPlanTarget || 100000, increaseAmount: oldIncrease || 1000, mode: oldMode || 'monthly', startTime: Date.now(), usdRate: currentUsdRate, manualAddedTotal: 0, dateRangeContributionTotal: 0, targetReached: false, };
         this.state.isTargetModalShown = false;
         this.elements.startAmount.value = '0';
         if(this.elements.manualAmount) this.elements.manualAmount.value = '';
         if (showPopupMessage) this.showPopup(this.i18n.translate('birikimPlanReset'), 'info');
         this.startCounter(); 
-        await this.updateUI();    
+        await this.updateUI();  
         await this.saveAllState(); 
       },
       async resetAllData() { 
@@ -778,6 +800,7 @@
         if (this.elements.kasaTotalAmountDisplay && amountToTransfer > 0) { this.elements.kasaTotalAmountDisplay.classList.add('flash-green-effect'); setTimeout(() => this.elements.kasaTotalAmountDisplay.classList.remove('flash-green-effect'), 700); }
         await this.resetBirikimTracker(false); 
         this.showPopup(this.i18n.translate('birikimResetForNewCycle'), 'info');
+        await this.saveAllState(); // İşlem sonrası durumu hemen kaydet
       },
       renderVaultTab() {
         if(this.elements.kasaTotalAmountDisplay) this.elements.kasaTotalAmountDisplay.textContent = this.formatTL(this.state.vaultTotal);
@@ -799,17 +822,17 @@
         else { this.elements.kasaUsdValue.textContent = `${usdText}: -`; }
       },
       async fetchAndUpdateUsdRate(showPopupOnSuccess = true) { 
-          try {
-          const response = await fetch(this.CONFIG.API_URL_USD_TRY); if (!response.ok) throw new Error(`API Error: ${response.status}`);
-          const data = await response.json(); const newUsdRate = data.rates.TRY;
-          if (newUsdRate) {
-            const formattedRate = parseFloat(newUsdRate.toFixed(4));
-            this.elements.usdRate.value = formattedRate; this.state.usdRate = formattedRate;
-            if (this.state.currentSavingData) { this.state.currentSavingData.usdRate = this.state.usdRate; }
-            this.updateUsdDisplay(); this.renderVaultUsdDisplay(); 
-            if(showPopupOnSuccess) this.showPopup(this.i18n.translate('usdRateApiUpdated'));
-            await this.saveAllState();
-          }} catch (error) { console.error("USD rate API error:", error); if(showPopupOnSuccess) this.showPopup(this.i18n.translate('usdRateApiError'), 'danger');}
+         try {
+        const response = await fetch(this.CONFIG.API_URL_USD_TRY); if (!response.ok) throw new Error(`API Error: ${response.status}`);
+        const data = await response.json(); const newUsdRate = data.rates.TRY;
+        if (newUsdRate) {
+          const formattedRate = parseFloat(newUsdRate.toFixed(4));
+          this.elements.usdRate.value = formattedRate; this.state.usdRate = formattedRate;
+          if (this.state.currentSavingData) { this.state.currentSavingData.usdRate = this.state.usdRate; }
+          this.updateUsdDisplay(); this.renderVaultUsdDisplay(); 
+          if(showPopupOnSuccess) this.showPopup(this.i18n.translate('usdRateApiUpdated'));
+          await this.saveAllState();
+        }} catch (error) { console.error("USD rate API error:", error); if(showPopupOnSuccess) this.showPopup(this.i18n.translate('usdRateApiError'), 'danger');}
       },
       async updateUsdRateManually() { 
           const manualRateStr = this.elements.usdRate.value.replace(',', '.');
@@ -881,7 +904,6 @@
             const currentTotal = SavingsTracker.calculateCurrentTotalSavings();
             if (Math.abs(currentTotal - prevAmount) > 0.001) { SavingsTracker.elements.currentAmountDisplay.classList.add('flash-green-effect'); setTimeout(() => SavingsTracker.elements.currentAmountDisplay.classList.remove('flash-green-effect'), 700); }
             prevAmount = currentTotal;
-            SavingsTracker.state.currentSavingData.lastElapsedTime = (Date.now() - (SavingsTracker.state.currentSavingData.startTime || Date.now())) / 1000;
             await SavingsTracker.updateUI(currentTotal); 
             if (Date.now() - SavingsTracker.state.lastSaveTime > SavingsTracker.CONFIG.SAVE_STATE_INTERVAL) { await SavingsTracker.saveAllState(); }
           }, SavingsTracker.CONFIG.UPDATE_INTERVAL);
@@ -889,6 +911,8 @@
       calculateCurrentTotalSavings: () => { 
           if (!SavingsTracker.state.currentSavingData) return 0;
           const data = SavingsTracker.state.currentSavingData; 
+          // BU FONKSİYON ARTIK DOĞRUDAN ARKA PLAN HESAPLAMASINI YAPIYOR.
+          // Başlangıç zamanından şu anki zamana kadar geçen süreyi hesaplar.
           const elapsedSeconds = (Date.now() - data.startTime) / 1000;
           const increaseAmount = data.increaseAmount || 0; let autoGeneratedAmount = 0;
           if (increaseAmount > 0) { const perSecondIncrease = data.mode === 'monthly' ? increaseAmount / (30 * 86400) : increaseAmount / (7 * 86400); autoGeneratedAmount = elapsedSeconds * perSecondIncrease; }
@@ -906,10 +930,9 @@
           }
           const currentTotal = currentAmountOverride !== undefined ? currentAmountOverride : this.calculateCurrentTotalSavings();
           const targetAmount = data?.targetAmount || 100000;
-          const lastElapsedTime = data?.lastElapsedTime || 0;
           this.elements.currentAmountDisplay.textContent = this.formatTL(currentTotal);
           this.updateUsdDisplay(currentTotal); await this.updateProgress(currentTotal, targetAmount);
-          const elapsedSeconds = lastElapsedTime > 0 ? lastElapsedTime : ((Date.now() - (data?.startTime || Date.now())) / 1000);
+          const elapsedSeconds = data ? (Date.now() - data.startTime) / 1000 : 0;
           this.updateTimeDisplay(elapsedSeconds); 
           if (this.elements.hourlyRateDisplay) {
             let hourlyRate = 0; const periodicIncrease = data?.increaseAmount || 0;
@@ -973,9 +996,9 @@
             this.state.chartInstance.update('none'); 
           } else {
             this.state.chartInstance = new Chart(ctx, { type: 'line', data: { datasets: [{ label: this.i18n.translate('amountTL'), data: chartDataPoints, borderColor: chartPrimaryColor, backgroundColor: chartPrimaryColor.replace(')',', 0.2)').replace('rgb','rgba'), fill: true, tension: 0.3, pointRadius: 1, pointHoverRadius: 6, borderWidth: 1.5 }] }, 
-              options: { responsive: true, maintainAspectRatio: false, animation: { duration: 400, easing: 'easeInOutQuad' }, scales: { x: { type: 'time', time: { unit: 'minute', tooltipFormat: 'PP HH:mm', displayFormats: {'minute': 'HH:mm'} }, ticks: { color: chartFontColor, source: 'auto', maxRotation: 0, autoSkip: true, padding: 10, font: {size: 10} }, grid: { color: chartGridColor, drawBorder: false } },  y: { beginAtZero: false, ticks: { color: chartFontColor, callback: (value) => this.formatTL(value).replace(/\s*TRY\s*$/, ''), padding: 10, font: {size: 10} }, grid: { color: chartGridColor, drawBorder: false, borderDash: [2,3] } } },
-                plugins: { legend: { labels: { color: chartFontColor, usePointStyle: true, boxWidth: 8, font: {size: 11} }, align: 'end' }, tooltip: { callbacks: { label: (context) => `${context.dataset.label}: ${this.formatTL(context.raw.y)}` }, bodyFont: {size: 13}, titleFont: {size: 11}, backgroundColor: isDark ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.9)', titleColor: chartFontColor, bodyColor: chartFontColor, borderColor: chartPrimaryColor, borderWidth:1, padding: 10, displayColors: false } } 
-              }
+                options: { responsive: true, maintainAspectRatio: false, animation: { duration: 400, easing: 'easeInOutQuad' }, scales: { x: { type: 'time', time: { unit: 'minute', tooltipFormat: 'PP HH:mm', displayFormats: {'minute': 'HH:mm'} }, ticks: { color: chartFontColor, source: 'auto', maxRotation: 0, autoSkip: true, padding: 10, font: {size: 10} }, grid: { color: chartGridColor, drawBorder: false } },  y: { beginAtZero: false, ticks: { color: chartFontColor, callback: (value) => this.formatTL(value).replace(/\s*TRY\s*$/, ''), padding: 10, font: {size: 10} }, grid: { color: chartGridColor, drawBorder: false, borderDash: [2,3] } } },
+                  plugins: { legend: { labels: { color: chartFontColor, usePointStyle: true, boxWidth: 8, font: {size: 11} }, align: 'end' }, tooltip: { callbacks: { label: (context) => `${context.dataset.label}: ${this.formatTL(context.raw.y)}` }, bodyFont: {size: 13}, titleFont: {size: 11}, backgroundColor: isDark ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.9)', titleColor: chartFontColor, bodyColor: chartFontColor, borderColor: chartPrimaryColor, borderWidth:1, padding: 10, displayColors: false } } 
+                }
             });
           }
       },
