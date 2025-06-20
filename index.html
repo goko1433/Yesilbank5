@@ -438,6 +438,7 @@
                 await localforage.setItem(key, value);
             } catch (err) {
                 console.error(`localForage 'set' error for key "${key}":`, err);
+                throw err; // Hata durumunda hatayı yukarıya fırlat
             }
         },
         async remove(key) {
@@ -460,7 +461,6 @@
         strings: {
           tr: {
             saved: "✓ Veri başarıyla kaydedildi!", manualSaveBtn: "Manuel Kaydet",
-            // ... diğer çeviriler ...
             kasaUsdEquivalent: "USD Karşılığı", appRealTitle: "Yeşil Banka Birikim", birikimTab: "Birikim", kasaTab: "Kasa", butceTab: "Bütçe", islemlerTab: "İşlemler", ayarlarTab: "Ayarlar",
             birikimSettingsTitle: "Birikim Ayarları", kasaTotalTitle: "Kasadaki Toplam Miktar", kasaHistoryTitle: "Kasa Transfer Geçmişi", generalSettingsTitle: "Genel Ayarlar", languageLabel: "Dil", themeLabel: "Tema",
             dataManagementTitle: "Veri Yönetimi", resetTitle: "Sıfırlama İşlemleri", resetBirikimBtn: "Sadece Birikimi Sıfırla", resetAllBtn: "Tüm Veriyi Sıfırla", resetWarning: "Dikkat: Sıfırlama işlemleri geri alınamaz.",
@@ -483,7 +483,6 @@
           },
           en: { 
             saved: "✓ Data saved successfully!", manualSaveBtn: "Manual Save",
-            // ... diğer çeviriler ...
             kasaUsdEquivalent: "USD Equivalent", appRealTitle: "Green Bank Savings", birikimTab: "Tracker", kasaTab: "Vault", butceTab: "Budget", islemlerTab: "Transactions", ayarlarTab: "Settings",
             birikimSettingsTitle: "Tracker Settings", kasaTotalTitle: "Total in Vault", kasaHistoryTitle: "Vault Transfer History", generalSettingsTitle: "General Settings", languageLabel: "Language", themeLabel: "Theme",
             dataManagementTitle: "Data Management", resetTitle: "Reset Actions", resetBirikimBtn: "Reset Tracker Only", resetAllBtn: "Reset All Data", resetWarning: "Warning: Reset actions cannot be undone.",
@@ -521,13 +520,10 @@
                 else { el.innerHTML = this.translate(key); } 
             });
             document.title = this.translate('appTitle');
-            if (SavingsTracker.state.chartInstance?.config?.data?.datasets?.length > 0) {
-                SavingsTracker.state.chartInstance.config.data.datasets[0].label = this.translate('amountTL');
-                SavingsTracker.state.chartInstance.update('none');
+            if (this.state.chartInstance?.config?.data?.datasets?.length > 0) {
+                this.state.chartInstance.config.data.datasets[0].label = this.translate('amountTL');
+                this.state.chartInstance.update('none');
             }
-            SavingsTracker.renderBudgetTable(); 
-            SavingsTracker.applyThemeButtonText(); 
-            SavingsTracker.updateUI(); 
         }
       },
       
@@ -556,24 +552,35 @@
         }
       },
 
+      // YENİLENDİ: Başlangıç sıralaması hatayı önlemek için yeniden düzenlendi.
       async init() {
         this.storage._init();
         this.cacheDOMElements();
+
+        // 1. Önce tüm veriyi yükle
         await this.loadState();
+        
+        // 2. Olay dinleyicilerini ve temel ayarları bağla
+        this.bindEvents();
         this.applyTheme();
         this.applyLanguage();
         this.initTabs();
-        this.bindEvents();
+        
+        // 3. Tablolar gibi ikincil içerikleri render et
+        this.renderBudgetTable();
+        this.renderTransactionHistory();
+        this.renderVaultTab();
 
+        // 4. Veri yüklendikten sonra ana arayüzü DOĞRU DEĞERLE çiz
+        await this.updateUI();
+
+        // 5. Her şey hazır olduktan sonra, eğer aktif bir plan varsa sayacı başlat
         if (this.state.currentSavingData && typeof this.state.currentSavingData.startTime === 'number') {
-            this.elements.usdRate.value = this.state.currentSavingData.usdRate || '';
-            this.state.usdRate = this.state.currentSavingData.usdRate || 0;
             this.startCounter();
             await this.fetchAndUpdateUsdRate(false);
         } else {
             await this.fetchAndUpdateUsdRate(true);
         }
-        await this.renderAllDynamicContent();
       },
 
       async saveAllState() { 
@@ -587,22 +594,10 @@
             this.state.lastSaveTime = Date.now();
         } catch (error) {
             console.error("CRITICAL SAVE ERROR:", error);
-            // Hata durumunda kullanıcıyı bilgilendir
             this.showPopup("HATA: Veri kaydedilemedi! " + error.message, 'danger', 10000);
         }
       },
       
-      // ... diğer fonksiyonlar ...
-      // KODUN GERİ KALANI ÖNCEKİ VERSİYON İLE AYNIDIR
-      // Sadece `calculateCurrentTotalSavings` ve `bindEvents` fonksiyonlarındaki
-      // mantık ve yorumlar önemlidir.
-
-      async renderAllDynamicContent(){ 
-        this.renderBudgetTable(); 
-        this.renderTransactionHistory(); 
-        this.renderVaultTab(); 
-        await this.updateUI();
-      },
       cacheDOMElements() { 
         this.elements = {
           languageSwitcher: document.getElementById('languageSwitcher'), themeToggleBtn: document.getElementById('themeToggleBtn'),
@@ -635,15 +630,8 @@
           tabTriggerEl.addEventListener('shown.bs.tab', async (event) => { 
             this.state.activeTabId = event.target.id;
             await this.storage.set('activeTabId', this.state.activeTabId);
-
-            switch(event.target.id) {
-                case 'birikim-tab':
-                    if (this.state.chartInstance) { setTimeout(() => this.state.chartInstance.resize(), 50); }
-                    await this.updateUI();
-                    break;
-                case 'kasa-tab': this.renderVaultTab(); break;
-                case 'butce-tab': this.renderBudgetTable(); break;
-                case 'islemler-tab': this.renderTransactionHistory(); break;
+            if(event.target.id === 'birikim-tab' && this.state.chartInstance) {
+                setTimeout(() => this.state.chartInstance.resize(), 50);
             }
           });
         });
@@ -651,19 +639,14 @@
         if (activeTabEl) { 
             const tab = new bootstrap.Tab(activeTabEl); 
             tab.show(); 
-             switch(activeTabEl.id) {
-                case 'birikim-tab': this.updateUI(); break;
-                case 'kasa-tab': this.renderVaultTab(); break;
-                case 'butce-tab': this.renderBudgetTable(); break;
-                case 'islemler-tab': this.renderTransactionHistory(); break;
-            }
         }
       },
       bindEvents() { 
         this.elements.languageSwitcher.addEventListener('change', async (e) => {
           this.state.currentLanguage = e.target.value; 
           await this.storage.set('currentLanguage', this.state.currentLanguage);
-          this.i18n.applyTranslations(); this.showPopup(this.i18n.translate('languageChanged'), 'info');
+          this.i18n.applyTranslations(); 
+          this.renderBudgetTable(); // Dil değişince bütçe tablosunu yeniden çiz
         });
 
         this.elements.manualSaveBtn.addEventListener('click', async () => {
@@ -679,16 +662,20 @@
             if (this.state.currentSavingData) this.saveAllState();
         });
 
-        // EN ÖNEMLİ GÜVENCE: Uygulama arka plana atıldığında veya sekme değiştiğinde veriyi kaydeder.
-        // Bu, iOS'ta veri kaybını önler ve "arka planda çalışma" mantığını destekler.
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'hidden') {
                 this.saveAllState();
             }
         });
       },
+      
+      // ... Diğer tüm fonksiyonlar (formatTL, formatDate, startSaving vb.) önceki haliyle aynı kalabilir ...
+      // ... Sadece init ve i18n.applyTranslations fonksiyonlarındaki düzenleme önemlidir.
+      // KODUN ANLAŞILIRLIĞI İÇİN TÜM FONKSİYONLARI BURADA BIRAKIYORUM.
+
       applyLanguage() { 
-        this.elements.languageSwitcher.value = this.state.currentLanguage; this.i18n.applyTranslations();
+        this.elements.languageSwitcher.value = this.state.currentLanguage; 
+        this.i18n.applyTranslations();
       },
       applyTheme() { 
           document.body.classList.toggle('dark-mode', this.state.currentTheme === 'dark');
@@ -798,8 +785,9 @@
         if(this.elements.dateResult) this.elements.dateResult.innerHTML = '';
         ['startAmountError', 'targetAmountError', 'increaseAmountError'].forEach(id => { if(this.elements[id]) this.elements[id].textContent = ''; });
         this.showPopup(this.i18n.translate('systemReset'), 'info'); 
-        await this.renderAllDynamicContent(); 
+        this.renderBudgetTable(); this.renderTransactionHistory(); this.renderVaultTab();
         if(this.elements.badgeContainer) this.elements.badgeContainer.innerHTML = '';
+        await this.updateUI();
         await this.fetchAndUpdateUsdRate(false); 
       },
       async transferToVault() {
@@ -924,8 +912,6 @@
             if (Date.now() - SavingsTracker.state.lastSaveTime > SavingsTracker.CONFIG.SAVE_STATE_INTERVAL) { await SavingsTracker.saveAllState(); }
           }, SavingsTracker.CONFIG.UPDATE_INTERVAL);
       },
-      // TEMEL MANTIK: Bu fonksiyon, başlangıç zamanından şimdiki zamana kadar geçen süreyi hesaplayarak
-      // "arka planda çalışma" etkisini yaratır. Her zaman doğru sonucu verir.
       calculateCurrentTotalSavings: () => { 
           if (!SavingsTracker.state.currentSavingData) return 0;
           const data = SavingsTracker.state.currentSavingData; 
