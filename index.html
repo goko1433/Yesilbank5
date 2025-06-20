@@ -404,7 +404,7 @@
         API_URL_USD_TRY: 'https://api.frankfurter.app/latest?from=USD&to=TRY',
         DEFAULT_LANGUAGE: 'tr',
         DEFAULT_THEME: 'light',
-        SAVE_STATE_INTERVAL: 2000, // GÜNCELLENDİ: 5 saniyeden 2 saniyeye düşürüldü.
+        SAVE_STATE_INTERVAL: 2000,
       },
       state: {
         timer: null, usdRate: 0, badges: [], chartInstance: null,
@@ -416,7 +416,6 @@
       },
       elements: {}, 
       
-      // GÜÇLENDİRİLMİŞ VERİ SAKLAMA (localForage KULLANILIYOR)
       storage: {
         _init() {
             localforage.config({
@@ -460,6 +459,8 @@
       i18n: {
         strings: {
           tr: {
+            saved: "✓ Veri başarıyla kaydedildi!", manualSaveBtn: "Manuel Kaydet",
+            // ... diğer çeviriler ...
             kasaUsdEquivalent: "USD Karşılığı", appRealTitle: "Yeşil Banka Birikim", birikimTab: "Birikim", kasaTab: "Kasa", butceTab: "Bütçe", islemlerTab: "İşlemler", ayarlarTab: "Ayarlar",
             birikimSettingsTitle: "Birikim Ayarları", kasaTotalTitle: "Kasadaki Toplam Miktar", kasaHistoryTitle: "Kasa Transfer Geçmişi", generalSettingsTitle: "Genel Ayarlar", languageLabel: "Dil", themeLabel: "Tema",
             dataManagementTitle: "Veri Yönetimi", resetTitle: "Sıfırlama İşlemleri", resetBirikimBtn: "Sadece Birikimi Sıfırla", resetAllBtn: "Tüm Veriyi Sıfırla", resetWarning: "Dikkat: Sıfırlama işlemleri geri alınamaz.",
@@ -476,11 +477,13 @@
             budgetCategoryRemoved: "{category} bütçeden silindi.", transactionTypeManual: "Manuel Ekleme", transactionTypeQuick: "Hızlı Ekleme", transactionTypeInitial: "Başlangıç Tutarı", transactionTypeDateRange: "Tarih Aralığı Katkısı",
             transactionTypeVaultTransfer: "Kasaya Transfer", dataExported: "Veriler 'yesilbanka_birikim_yedek.json' olarak indirildi.", noDataToExport: "Dışa aktarılacak veri yok.", confirmResetBirikimMsg: "Mevcut birikim planı sıfırlanacak (kasa ve diğer ayarlar etkilenmeyecek). Emin misiniz?",
             confirmResetAllMsg: "TÜM VERİLER (kasa dahil) kalıcı olarak silinecek! Emin misiniz?", contributionCalculated: "Seçili aralık katkısı: {autoSave}", selectDateRangeFirst: "Önce tarih aralığı seçin!",
-            startSystemFirst: "Önce birikim planını başlatın!", invalidDateFormat: "Geçersiz tarih formatı!", endDateAfterStart: "Bitiş, başlangıçtan sonra olmalı!", saved: "Veri kaydedildi!", languageChanged: "Dil değiştirildi.",
+            startSystemFirst: "Önce birikim planını başlatın!", invalidDateFormat: "Geçersiz tarih formatı!", endDateAfterStart: "Bitiş, başlangıçtan sonra olmalı!", languageChanged: "Dil değiştirildi.",
             quickAddAmount: "+{amount} TL", delete: "Sil", appTitle: "Yeşil Banka - Birikim Takip", transferToVaultBtn: "Kasaya Aktar", vaultTransferSuccess: "{amount} kasaya başarıyla aktarıldı!",
-            birikimResetForNewCycle: "Birikim sayacı yeni döngü için sıfırlandı.", noActiveBirikimToTransfer: "Kasaya aktarılacak aktif bir birikim bulunmuyor.", birikimPlanReset: "Birikim planı sıfırlandı.", manualSaveBtn: "Manuel Kaydet",
+            birikimResetForNewCycle: "Birikim sayacı yeni döngü için sıfırlandı.", noActiveBirikimToTransfer: "Kasaya aktarılacak aktif bir birikim bulunmuyor.", birikimPlanReset: "Birikim planı sıfırlandı."
           },
           en: { 
+            saved: "✓ Data saved successfully!", manualSaveBtn: "Manual Save",
+            // ... diğer çeviriler ...
             kasaUsdEquivalent: "USD Equivalent", appRealTitle: "Green Bank Savings", birikimTab: "Tracker", kasaTab: "Vault", butceTab: "Budget", islemlerTab: "Transactions", ayarlarTab: "Settings",
             birikimSettingsTitle: "Tracker Settings", kasaTotalTitle: "Total in Vault", kasaHistoryTitle: "Vault Transfer History", generalSettingsTitle: "General Settings", languageLabel: "Language", themeLabel: "Theme",
             dataManagementTitle: "Data Management", resetTitle: "Reset Actions", resetBirikimBtn: "Reset Tracker Only", resetAllBtn: "Reset All Data", resetWarning: "Warning: Reset actions cannot be undone.",
@@ -497,9 +500,9 @@
             transactionTypeManual: "Manual Add", transactionTypeQuick: "Quick Add", transactionTypeInitial: "Initial Amount", transactionTypeDateRange: "Date Range Contribution", transactionTypeVaultTransfer: "Transfer to Vault",
             dataExported: "Data downloaded as 'greenbank_savings_backup.json'.", noDataToExport: "No data to export.", confirmResetBirikimMsg: "Current savings plan will be reset (vault and other settings will not be affected). Are you sure?",
             confirmResetAllMsg: "ALL DATA (including vault) will be permanently deleted! Are you sure?", contributionCalculated: "Selected range contribution: {autoSave}", selectDateRangeFirst: "Select date range first!",
-            startSystemFirst: "Start a savings plan first!", invalidDateFormat: "Invalid date format!", endDateAfterStart: "End date must be after start!", saved: "Data saved!", languageChanged: "Language changed.",
+            startSystemFirst: "Start a savings plan first!", invalidDateFormat: "Invalid date format!", endDateAfterStart: "End date must be after start!", languageChanged: "Language changed.",
             quickAddAmount: "+{amount} TRY", delete: "Delete", appTitle: "Green Bank - Savings Tracker", transferToVaultBtn: "Transfer to Vault", vaultTransferSuccess: "{amount} successfully transferred to vault!",
-            birikimResetForNewCycle: "Savings tracker reset for a new cycle.", noActiveBirikimToTransfer: "No active savings to transfer to vault.", birikimPlanReset: "Savings plan has been reset.", manualSaveBtn: "Manual Save",
+            birikimResetForNewCycle: "Savings tracker reset for a new cycle.", noActiveBirikimToTransfer: "No active savings to transfer to vault.", birikimPlanReset: "Savings plan has been reset."
           }
         },
         translate(key, params = {}) { 
@@ -528,7 +531,6 @@
         }
       },
       
-      // TÜM FONKSİYONLAR ASENKRON (ASYNC) HALE GETİRİLDİ
       async loadState() {
         this.state.currentSavingData = await this.storage.get('currentSavingData');
         this.state.transactions = await this.storage.get('transactions', []);
@@ -575,14 +577,26 @@
       },
 
       async saveAllState() { 
-        if (!this.state.currentSavingData) return; // Kaydedilecek veri yoksa çık
-        await this.storage.set('currentSavingData', this.state.currentSavingData);
-        await this.storage.set('transactions', this.state.transactions); 
-        await this.storage.set('budgetItems', this.state.budgetItems);
-        await this.storage.set('vaultTotal', this.state.vaultTotal); 
-        await this.storage.set('vaultTransactions', this.state.vaultTransactions);
-        this.state.lastSaveTime = Date.now();
+        if (!this.state.currentSavingData) return;
+        try {
+            await this.storage.set('currentSavingData', this.state.currentSavingData);
+            await this.storage.set('transactions', this.state.transactions); 
+            await this.storage.set('budgetItems', this.state.budgetItems);
+            await this.storage.set('vaultTotal', this.state.vaultTotal); 
+            await this.storage.set('vaultTransactions', this.state.vaultTransactions);
+            this.state.lastSaveTime = Date.now();
+        } catch (error) {
+            console.error("CRITICAL SAVE ERROR:", error);
+            // Hata durumunda kullanıcıyı bilgilendir
+            this.showPopup("HATA: Veri kaydedilemedi! " + error.message, 'danger', 10000);
+        }
       },
+      
+      // ... diğer fonksiyonlar ...
+      // KODUN GERİ KALANI ÖNCEKİ VERSİYON İLE AYNIDIR
+      // Sadece `calculateCurrentTotalSavings` ve `bindEvents` fonksiyonlarındaki
+      // mantık ve yorumlar önemlidir.
+
       async renderAllDynamicContent(){ 
         this.renderBudgetTable(); 
         this.renderTransactionHistory(); 
@@ -612,7 +626,7 @@
           budgetTableBody: document.getElementById('budgetTable'), newBudgetCategory: document.getElementById('newBudgetCategory'),
           newBudgetAmount: document.getElementById('newBudgetAmount'), totalBudgetAmountDisplay: document.getElementById('totalBudgetAmount'),
           transactionHistoryTableBody: document.getElementById('transactionHistoryTable'),
-          manualSaveBtn: document.getElementById('manualSaveBtn'), // YENİ EKLENDİ
+          manualSaveBtn: document.getElementById('manualSaveBtn'),
         };
       },
       initTabs() { 
@@ -652,18 +666,21 @@
           this.i18n.applyTranslations(); this.showPopup(this.i18n.translate('languageChanged'), 'info');
         });
 
-        // YENİ: Manuel Kaydet Butonu Olayı
         this.elements.manualSaveBtn.addEventListener('click', async () => {
-            await this.saveAllState();
-            this.showPopup(this.i18n.translate('saved'), 'success');
+            try {
+                await this.saveAllState();
+                this.showPopup(this.i18n.translate('saved'), 'success');
+            } catch (error) {
+                alert('HATA: Veri kaydedilemedi! Hata: ' + error.message);
+            }
         });
         
-        // GÜNCELLENDİ: Mobil cihazlar ve iOS için daha güvenilir kaydetme yöntemleri
         window.addEventListener('beforeunload', () => {
             if (this.state.currentSavingData) this.saveAllState();
         });
 
-        // YENİ: Uygulama arka plana atıldığında veya sekme değiştiğinde kaydet. BU EN ÖNEMLİ DÜZELTME.
+        // EN ÖNEMLİ GÜVENCE: Uygulama arka plana atıldığında veya sekme değiştiğinde veriyi kaydeder.
+        // Bu, iOS'ta veri kaybını önler ve "arka planda çalışma" mantığını destekler.
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'hidden') {
                 this.saveAllState();
@@ -682,7 +699,6 @@
               const chartFontColor = isDark ? bodyStyles.getPropertyValue('--app-dark-text') : bodyStyles.getPropertyValue('--app-text-color');
               const chartGridColor = isDark ? 'rgba(200, 240, 208, 0.1)' : 'rgba(0, 77, 37, 0.1)';
               const chartPrimaryColor = bodyStyles.getPropertyValue('--app-primary-green');
-
               this.state.chartInstance.options.scales.x.ticks.color = chartFontColor;
               this.state.chartInstance.options.scales.y.ticks.color = chartFontColor;
               this.state.chartInstance.options.scales.x.grid.color = chartGridColor;
@@ -800,7 +816,7 @@
         if (this.elements.kasaTotalAmountDisplay && amountToTransfer > 0) { this.elements.kasaTotalAmountDisplay.classList.add('flash-green-effect'); setTimeout(() => this.elements.kasaTotalAmountDisplay.classList.remove('flash-green-effect'), 700); }
         await this.resetBirikimTracker(false); 
         this.showPopup(this.i18n.translate('birikimResetForNewCycle'), 'info');
-        await this.saveAllState(); // İşlem sonrası durumu hemen kaydet
+        await this.saveAllState();
       },
       renderVaultTab() {
         if(this.elements.kasaTotalAmountDisplay) this.elements.kasaTotalAmountDisplay.textContent = this.formatTL(this.state.vaultTotal);
@@ -908,11 +924,11 @@
             if (Date.now() - SavingsTracker.state.lastSaveTime > SavingsTracker.CONFIG.SAVE_STATE_INTERVAL) { await SavingsTracker.saveAllState(); }
           }, SavingsTracker.CONFIG.UPDATE_INTERVAL);
       },
+      // TEMEL MANTIK: Bu fonksiyon, başlangıç zamanından şimdiki zamana kadar geçen süreyi hesaplayarak
+      // "arka planda çalışma" etkisini yaratır. Her zaman doğru sonucu verir.
       calculateCurrentTotalSavings: () => { 
           if (!SavingsTracker.state.currentSavingData) return 0;
           const data = SavingsTracker.state.currentSavingData; 
-          // BU FONKSİYON ARTIK DOĞRUDAN ARKA PLAN HESAPLAMASINI YAPIYOR.
-          // Başlangıç zamanından şu anki zamana kadar geçen süreyi hesaplar.
           const elapsedSeconds = (Date.now() - data.startTime) / 1000;
           const increaseAmount = data.increaseAmount || 0; let autoGeneratedAmount = 0;
           if (increaseAmount > 0) { const perSecondIncrease = data.mode === 'monthly' ? increaseAmount / (30 * 86400) : increaseAmount / (7 * 86400); autoGeneratedAmount = elapsedSeconds * perSecondIncrease; }
