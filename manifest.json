@@ -1,0 +1,23 @@
+{
+  "name": "Yeşil Banka Birikim",
+  "short_name": "Birikim",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#e6f4ea",
+  "theme_color": "#00963c",
+  "description": "Kişisel birikim ve bütçe takip uygulaması.",
+  "icons": [
+    {
+      "src": "https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_savings/baseline-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_savings/baseline-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
