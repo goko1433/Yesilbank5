@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Yeşil Banka - Birikim Takip</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#00963c"/>
+  
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --app-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      --app-primary-green: #00963c; 
+      --app-primary-green-dark: #00752e; 
+      --app-light-green-bg: #e6f4ea; 
+      --app-medium-green-bg: #f0fff0; 
+      --app-text-color: #004d25; 
+      --app-border-color: #b3dbc0; 
+      --app-muted-text: #547860; 
+      --app-dark-bg: #002a0c; 
+      --app-dark-card-bg: #003d12; 
+      --app-dark-text: #c8f0d0; 
+      --app-dark-border: #00521e; 
+      --app-dark-muted-text: #8ca998;
+      --app-info: #0277bd;
+      --app-warning: #f57c00;
+      --app-danger: #d32f2f;
+      --app-white: #ffffff;
+      --app-black: #000000;
+    }
+    body { font-family: var(--app-font-family); background-color: var(--app-light-green-bg); color: var(--app-text-color); transition: background-color 0.3s, color 0.3s; font-size: 0.95rem; }
+    body.dark-mode { background-color: var(--app-dark-bg); color: var(--app-dark-text); }
+    .section-box, .card { background-color: var(--app-medium-green-bg); border: 1px solid var(--app-border-color); border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,77,37,0.05); transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s ease-out, transform 0.3s ease-out; }
+    .card:hover, .section-box:hover { transform: translateY(-3px); box-shadow: 0 5px 10px rgba(0,77,37,0.08); }
+    body.dark-mode .section-box, body.dark-mode .card { background-color: var(--app-dark-card-bg); border-color: var(--app-dark-border); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    body.dark-mode .card:hover, body.dark-mode .section-box:hover { box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
+    .nav-tabs { border-bottom: 2px solid var(--app-border-color); }
+    body.dark-mode .nav-tabs { border-bottom-color: var(--app-dark-border); }
+    .nav-tabs .nav-link { color: var(--app-muted-text); border: none; border-bottom: 2px solid transparent; padding: 0.75rem 1rem; font-weight: 500; transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out; }
+    .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus { color: var(--app-primary-green); border-bottom-color: var(--app-primary-green); }
+    .nav-tabs .nav-link.active { color: var(--app-primary-green); background-color: transparent; border-bottom: 2px solid var(--app-primary-green); font-weight: 600; }
+    body.dark-mode .nav-tabs .nav-link { color: var(--app-dark-muted-text); }
+    body.dark-mode .nav-tabs .nav-link:hover, body.dark-mode .nav-tabs .nav-link:focus { color: var(--app-white); border-bottom-color: var(--app-white); }
+    body.dark-mode .nav-tabs .nav-link.active { color: var(--app-white); border-bottom-color: var(--app-white); }
+    .btn { border-radius: 0.3rem; font-weight: 500; transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, transform 0.1s ease, box-shadow 0.2s ease; }
+    .btn:hover { box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .btn:active { transform: scale(0.98); box-shadow: none; }
+    .btn-primary { background-color: var(--app-primary-green); border-color: var(--app-primary-green); color: var(--app-white); }
+    .btn-primary:hover { background-color: var(--app-primary-green-dark); border-color: var(--app-primary-green-dark); color: var(--app-white); }
+    .btn-success { background-color: var(--app-primary-green); border-color: var(--app-primary-green); color: var(--app-white); } 
+    .btn-success:hover { background-color: var(--app-primary-green-dark); border-color: var(--app-primary-green-dark); color: var(--app-white); }
+    .btn-secondary { background-color: #6c757d; border-color: #6c757d; color: var(--app-white); } 
+    .btn-secondary:hover { background-color: #5a6268; border-color: #545b62; color: var(--app-white); }
+    .btn-outline-light { border-color: var(--app-primary-green); color: var(--app-primary-green); }
+    .btn-outline-light:hover { background-color: var(--app-primary-green); color: var(--app-white); }
+    body.dark-mode .btn-outline-light { border-color: var(--app-light-green-bg); color: var(--app-light-green-bg); }
+    body.dark-mode .btn-outline-light:hover { background-color: var(--app-light-green-bg); color: var(--app-dark-bg); }
+    .progress { background-color: var(--app-border-color); border-radius: 0.3rem; overflow: hidden;}
+    body.dark-mode .progress { background-color: var(--app-dark-border); }
+    .progress-bar { transition: width 0.5s ease-in-out !important; }
+    .progress-bar.bg-success { background-color: var(--app-primary-green) !important; }
+    .progress-bar.bg-info { background-color: var(--app-info) !important; }
+    .form-control, .form-select { background-color: var(--app-white); color: var(--app-text-color); border: 1px solid var(--app-border-color); border-radius: 0.3rem; transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+    .form-control:focus, .form-select:focus { border-color: var(--app-primary-green); box-shadow: 0 0 0 0.2rem rgba(0, 150, 60, 0.25); }
+    body.dark-mode .form-control, body.dark-mode .form-select { background-color: var(--app-dark-card-bg); color: var(--app-dark-text); border-color: var(--app-dark-border); }
+    body.dark-mode .form-control:focus, body.dark-mode .form-select:focus { border-color: var(--app-light-green-bg); box-shadow: 0 0 0 0.2rem rgba(200, 240, 208, 0.25); }
+    .form-control::placeholder { color: var(--app-muted-text); } 
+    body.dark-mode .form-control::placeholder { color: var(--app-dark-muted-text); }
+    .table { --bs-table-bg: transparent; --bs-table-color: var(--app-text-color); --bs-table-border-color: var(--app-border-color); --bs-table-striped-bg: rgba(0,77,37,0.02); --bs-table-hover-bg: rgba(0,77,37,0.04); }
+    .table tbody tr { transition: background-color 0.2s ease-in-out; }
+    body.dark-mode .table { --bs-table-color: var(--app-dark-text); --bs-table-border-color: var(--app-dark-border); --bs-table-striped-bg: rgba(200,240,208,0.03); --bs-table-hover-bg: rgba(200,240,208,0.05); }
+    body.dark-mode .modal-content { background-color: var(--app-dark-card-bg); color: var(--app-dark-text); }
+    body.dark-mode .modal-header, body.dark-mode .modal-footer { border-color: var(--app-dark-border); }
+    body.dark-mode .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
+    .alert-popup { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1060; box-shadow: 0 4px 8px rgba(0,0,0,0.1); min-width: 300px; border-radius: 0.3rem; animation: slideDownFadeIn 0.5s ease-out; }
+    @keyframes slideDownFadeIn { from { opacity: 0; transform: translate(-50%, -20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+    .app-header-title { font-size: 1.5rem; font-weight: 600; color: var(--app-primary-green); }
+    body.dark-mode .app-header-title { color: var(--app-light-green-bg); }
+    @media (max-width: 575.98px) { .app-header-title { font-size: 1.25rem; } }
+    .input-error-msg { color: var(--app-danger); font-size: 0.8em; margin-top: 0.2rem; }
+    .btn i.fas, .btn i.far { margin-right: 0.5em; }
+    .tab-content { padding-top: 1.5rem; } 
+    .kasa-total { font-size: 2.25rem; font-weight: bold; color: var(--app-primary-green); transition: color 0.3s ease, transform 0.3s ease; }
+    body.dark-mode .kasa-total { color: var(--app-light-green-bg); }
+    #currentAmount { color: var(--app-primary-green); transition: color 0.3s ease, transform 0.3s ease; }
+    body.dark-mode #currentAmount { color: var(--app-light-green-bg); }
+    .text-muted { color: var(--app-muted-text) !important; }
+    body.dark-mode .text-muted { color: var(--app-dark-muted-text) !important; }
+    .flash-green-effect { animation: flashGreenAnimation 0.7s ease-out; }
+    @keyframes flashGreenAnimation { 0% { transform: scale(1); opacity: 1;} 25% { transform: scale(1.03); opacity: 0.9; } 50% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+    body.dark-mode .flash-green-effect { animation: flashGreenAnimationDark 0.7s ease-out; }
+    @keyframes flashGreenAnimationDark { 0% { transform: scale(1); opacity: 1;} 25% { transform: scale(1.03); opacity: 0.9; } 50% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+    @keyframes fadeInRow { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+    .budget-row-enter { animation: fadeInRow 0.4s ease-out forwards; }
+    @keyframes fadeOutRow { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(20px); } }
+    .budget-row-exit { animation: fadeOutRow 0.4s ease-in forwards; }
+  </style>
+</head>
+<body class="container py-3">
+
+  <header class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center mb-3">
+    <h1 class="mb-2 mb-sm-0 app-header-title"><i class="fas fa-leaf"></i> <span data-translate="appRealTitle">Yeşil Banka Birikim</span></h1>
+  </header>
+
+  <ul class="nav nav-tabs" id="appTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="birikim-tab" data-bs-toggle="tab" data-bs-target="#birikim-tab-pane" type="button" role="tab" aria-controls="birikim-tab-pane" aria-selected="true">
+        <i class="fas fa-chart-line"></i> <span data-translate="birikimTab">Birikim</span>
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="kasa-tab" data-bs-toggle="tab" data-bs-target="#kasa-tab-pane" type="button" role="tab" aria-controls="kasa-tab-pane" aria-selected="false">
+        <i class="fas fa-piggy-bank"></i> <span data-translate="kasaTab">Kasa</span>
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="butce-tab" data-bs-toggle="tab" data-bs-target="#butce-tab-pane" type="button" role="tab" aria-controls="butce-tab-pane" aria-selected="false">
+        <i class="fas fa-file-invoice-dollar"></i> <span data-translate="butceTab">Bütçe</span>
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="islemler-tab" data-bs-toggle="tab" data-bs-target="#islemler-tab-pane" type="button" role="tab" aria-controls="islemler-tab-pane" aria-selected="false">
+        <i class="fas fa-exchange-alt"></i> <span data-translate="islemlerTab">İşlemler</span>
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="ayarlar-tab" data-bs-toggle="tab" data-bs-target="#ayarlar-tab-pane" type="button" role="tab" aria-controls="ayarlar-tab-pane" aria-selected="false">
+        <i class="fas fa-cog"></i> <span data-translate="ayarlarTab">Ayarlar</span>
+      </button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="appTabContent">
+    <div class="tab-pane fade show active" id="birikim-tab-pane" role="tabpanel" aria-labelledby="birikim-tab" tabindex="0">
+      <div class="section-box p-3 mb-3">
+        <h4 class="mb-3" data-translate="birikimSettingsTitle">Birikim Ayarları</h4>
+        <div class="row g-3">
+          <div class="col-lg-3 col-md-6">
+            <label for="startAmount" data-translate="startAmountLabel">Başlangıç Tutarı</label>
+            <input type="number" id="startAmount" class="form-control" placeholder="0" data-translate-placeholder="startAmountPlaceholder">
+            <div id="startAmountError" class="input-error-msg"></div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <label for="targetAmount" data-translate="targetAmountLabel">Hedef Tutar</label>
+            <input type="number" id="targetAmount" class="form-control" placeholder="100000" data-translate-placeholder="targetAmountPlaceholder">
+            <div id="targetAmountError" class="input-error-msg"></div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <label for="increaseAmount" data-translate="increaseAmountLabel">Periyodik Artış</label>
+            <input type="number" id="increaseAmount" class="form-control" placeholder="1000" data-translate-placeholder="increaseAmountPlaceholder">
+            <div id="increaseAmountError" class="input-error-msg"></div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <label for="mode" data-translate="modeLabel">Birikim Modu</label>
+            <select id="mode" class="form-select">
+              <option value="monthly" data-translate="monthlySavings">Aylık</option>
+              <option value="weekly" data-translate="weeklySavings">Haftalık</option>
+            </select>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <label for="usdRate" data-translate="usdRateLabel">USD Kuru</label>
+            <input type="number" id="usdRate" class="form-control" placeholder="örn: 32.50" data-translate-placeholder="usdRatePlaceholder">
+          </div>
+          <div class="col-lg-4 col-md-6 d-flex align-items-end">
+            <button class="btn btn-primary w-100" onclick="SavingsTracker.updateUsdRateManually()"><i class="fas fa-sync-alt"></i> <span data-translate="updateRateBtn">Kuru Güncelle</span></button>
+          </div>
+          <div class="col-lg-4 col-md-12 d-flex align-items-end">
+            <button class="btn btn-success w-100" onclick="SavingsTracker.startSaving()"><i class="fas fa-play-circle"></i> <span data-translate="saveAndStartBtn">Kaydet & Başlat</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-box p-3 mb-3">
+        <h5 data-translate="dateRangeTitle">Tarih Aralığı ile Ek Katkı</h5>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label data-translate="startDateLabel">Başlangıç Tarihi</label>
+            <input type="datetime-local" id="startDate" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label data-translate="endDateLabel">Bitiş Tarihi</label>
+            <input type="datetime-local" id="endDate" class="form-control">
+          </div>
+          <div class="col-md-4 d-flex align-items-end">
+            <div class="row w-100 g-2">
+              <div class="col-12 col-sm-6 mb-2 mb-sm-0">
+                <button class="btn btn-info w-100" onclick="SavingsTracker.calculateContributionBetweenDates()"><i class="fas fa-calculator"></i> <span data-translate="calculateRangeBtn">Hesapla</span></button>
+              </div>
+              <div class="col-12 col-sm-6">
+                <button class="btn btn-primary w-100" onclick="SavingsTracker.saveDateRangeContribution()"><i class="fas fa-plus-circle"></i> <span data-translate="saveRangeBtn">Ekle</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="dateResult" class="mt-3"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6 mb-3 mb-lg-0">
+            <div class="card p-3 h-100 d-flex flex-column"> 
+                <h4 data-translate="currentStatusTitle">📈 Anlık Birikim</h4>
+                <h2 id="currentAmount" class="display-5 fw-bold">0,00 TL</h2>
+                <h6 id="usdValue" class="text-muted mb-2">USD Karşılığı: -</h6>
+                <h6 id="remainingTime" aria-live="polite" class="text-muted small">⏳ <span data-translate="elapsedTime">Geçen süre</span>: -</h6>
+                <h6 id="hourlyRateDisplay" class="text-muted small mt-1"><span data-translate="hourlyRateLabel">Planlanan Saatlik Artış</span>: -</h6>
+                <div class="progress my-3" role="progressbar" aria-label="Genel birikim ilerlemesi" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar bg-success" id="progressBarElem" style="width: 0%">0%</div>
+                </div>
+                <div class="mt-auto"> 
+                     <button class="btn btn-primary w-100 btn-lg" onclick="SavingsTracker.transferToVault()"> 
+                        <i class="fas fa-hand-holding-usd"></i> <span data-translate="transferToVaultBtn">Kasaya Aktar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card p-3 mb-3">
+                <h4 data-translate="manualAddLabel">💵 Manuel Ekleme</h4>
+                <div class="input-group mb-2">
+                    <input type="number" id="manualAmount" class="form-control" placeholder="TL miktarı" data-translate-placeholder="tlAmountPlaceholder">
+                    <button class="btn btn-warning" onclick="SavingsTracker.addManualAmount()"><i class="fas fa-plus"></i> <span data-translate="addBtn">Ekle</span></button>
+                </div>
+                <div>
+                    <button class="btn btn-outline-secondary btn-sm me-1" onclick="SavingsTracker.quickAdd(100)">+100 TL</button>
+                    <button class="btn btn-outline-secondary btn-sm me-1" onclick="SavingsTracker.quickAdd(500)">+500 TL</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="SavingsTracker.quickAdd(1000)">+1000 TL</button>
+                </div>
+            </div>
+             <div class="card p-3">
+                <h4 data-translate="levelsTitle">🏆 Seviyeler</h4>
+                <div id="nextLevelText"><span data-translate="nextLevelRemaining">Sonraki seviyeye</span>: -</div>
+                <div class="progress" id="nextLevelProgress" role="progressbar" aria-label="Sonraki seviye ilerlemesi" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar bg-info" id="levelProgressBar" style="width: 0%"></div>
+                </div>
+                <div id="badgeContainer" class="mt-3 d-flex flex-wrap"></div>
+            </div>
+        </div>
+      </div>
+       <div class="row mt-3"> 
+        <div class="col-12">
+          <div class="card p-3">
+            <h4 data-translate="savingsTrendTitle">📊 Birikim Trendi</h4>
+            <div style="height: 250px;"><canvas id="savingsChart"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="kasa-tab-pane" role="tabpanel" aria-labelledby="kasa-tab" tabindex="0">
+      <div class="section-box p-3 text-center">
+        <h4 data-translate="kasaTotalTitle"><i class="fas fa-gem"></i> Kasadaki Toplam Miktar</h4>
+        <p id="kasaTotalAmount" class="kasa-total">0,00 TL</p>
+        <h6 id="kasaUsdValue" class="text-muted small" data-translate="kasaUsdEquivalent">USD Karşılığı: -</h6>
+      </div>
+      <div class="section-box p-3 mt-3">
+        <h5 data-translate="kasaHistoryTitle"><i class="fas fa-history"></i> Kasa Transfer Geçmişi</h5>
+        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+          <table class="table table-sm table-striped table-hover">
+            <thead>
+              <tr>
+                <th data-translate="date">Tarih</th>
+                <th data-translate="amountTL">Miktar</th>
+              </tr>
+            </thead>
+            <tbody id="kasaHistoryTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="butce-tab-pane" role="tabpanel" aria-labelledby="butce-tab" tabindex="0">
+      <div class="section-box p-3">
+        <h4 data-translate="budgetPlanningTitle">💸 Bütçe Planlama (Aylık)</h4>
+        <div class="table-responsive">
+            <table class="table table-sm table-hover">
+            <thead>
+                <tr>
+                <th data-translate="category">Kategori</th>
+                <th data-translate="amountTL">Miktar</th>
+                <th data-translate="actions">Eylemler</th>
+                </tr>
+            </thead>
+            <tbody id="budgetTable"></tbody>
+            <tfoot>
+                <tr>
+                <td><input type="text" id="newBudgetCategory" class="form-control form-control-sm" data-translate-placeholder="categoryPlaceholder"></td>
+                <td><input type="number" id="newBudgetAmount" class="form-control form-control-sm" data-translate-placeholder="amountPlaceholder"></td>
+                <td><button class="btn btn-success btn-sm w-100" onclick="SavingsTracker.addBudgetRow()"><i class="fas fa-plus"></i> <span data-translate="addBtn">Ekle</span></button></td>
+                </tr>
+                <tr class="table-group-divider">
+                <td class="fw-bold" data-translate="totalBudget">Toplam Bütçe</td>
+                <td id="totalBudgetAmount" class="fw-bold">0,00 TL</td>
+                <td></td>
+                </tr>
+            </tfoot>
+            </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="islemler-tab-pane" role="tabpanel" aria-labelledby="islemler-tab" tabindex="0">
+       <div class="section-box p-3">
+        <h4 data-translate="transactionHistoryTitle">📜 Tüm İşlem Geçmişi</h4>
+        <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+          <table class="table table-sm table-striped table-hover">
+            <thead>
+              <tr>
+                <th data-translate="date">Tarih</th>
+                <th data-translate="type">Tip</th>
+                <th data-translate="amountTL">Miktar</th>
+                <th data-translate="description">Açıklama</th>
+              </tr>
+            </thead>
+            <tbody id="transactionHistoryTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="ayarlar-tab-pane" role="tabpanel" aria-labelledby="ayarlar-tab" tabindex="0">
+        <div class="section-box p-3">
+            <h4 data-translate="generalSettingsTitle"><i class="fas fa-cogs"></i> Genel Ayarlar</h4>
+            <div class="mb-3 row align-items-center">
+                <label class="col-sm-3 col-form-label" data-translate="languageLabel">Dil:</label>
+                <div class="col-sm-9">
+                    <select id="languageSwitcher" class="form-select form-select-sm w-auto">
+                        <option value="tr">Türkçe</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+                <label class="col-sm-3 col-form-label" data-translate="themeLabel">Tema:</label>
+                <div class="col-sm-9">
+                    <button class="btn btn-outline-light btn-sm text-nowrap" id="themeToggleBtn" onclick="SavingsTracker.toggleTheme()">
+                        <i class="fas fa-moon"></i> <span data-translate="toggleTheme">Tema Değiştir</span>
+                    </button>
+                </div>
+            </div>
+             <hr>
+            <h5 class="mt-4" data-translate="dataManagementTitle"><i class="fas fa-database"></i> Veri Yönetimi</h5>
+            <div class="d-grid gap-2 d-sm-flex mt-2">
+                <button class="btn btn-secondary" onclick="SavingsTracker.exportData()">
+                    <i class="fas fa-download"></i> <span data-translate="exportDataBtn">Veriyi Dışa Aktar</span>
+                </button>
+                <button class="btn btn-info" onclick="SavingsTracker.shareProgress()">
+                    <i class="fas fa-share-alt"></i> <span data-translate="shareProgressBtn">İlerlemeyi Paylaş</span>
+                </button>
+            </div>
+            <hr>
+            <h5 class="mt-4 text-danger" data-translate="resetTitle"><i class="fas fa-exclamation-triangle"></i> Sıfırlama İşlemleri</h5>
+            <div class="d-grid gap-2 d-sm-flex mt-2">
+                 <button class="btn btn-warning" onclick="SavingsTracker.confirmResetBirikim()">
+                    <i class="fas fa-undo"></i> <span data-translate="resetBirikimBtn">Sadece Birikimi Sıfırla</span>
+                </button>
+                <button class="btn btn-danger" onclick="SavingsTracker.confirmResetAll()">
+                    <i class="fas fa-trash"></i> <span data-translate="resetAllBtn">Tüm Veriyi Sıfırla</span>
+                </button>
+            </div>
+            <small class="d-block mt-2 text-muted" data-translate="resetWarning">Dikkat: Sıfırlama işlemleri geri alınamaz.</small>
+        </div>
+    </div>
+  </div>
+
+  <div id="popupContainer" class="position-fixed top-0 start-50 translate-middle-x" style="z-index: 1060; padding-top: 1rem;"></div>
+
+  <div class="modal fade" id="targetModal" tabindex="-1" aria-labelledby="targetModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="targetModalLabel"><span data-translate="congratsTitle">🎉 Tebrikler!</span></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <span data-translate="targetReachedMsg">Birikim hedefinize ulaştınız! Yeni bir hedef belirlemek ister misiniz?</span>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" data-bs-dismiss="modal"><span data-translate="okBtn">Tamam</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script>
+  
+  <script>
+    const SavingsTracker = {
+      CONFIG: {
+        UPDATE_INTERVAL: 100, 
+        LEVEL_GAP: 25000, 
+        CHART_MAX_DATAPOINTS: 120,
+        API_URL_USD_TRY: 'https://api.frankfurter.app/latest?from=USD&to=TRY',
+        DEFAULT_LANGUAGE: 'tr',
+        DEFAULT_THEME: 'light',
+        SAVE_STATE_INTERVAL: 5000,
+      },
+      state: {
+        timer: null, usdRate: 0, badges: [], chartInstance: null,
+        currentSavingData: null, transactions: [], budgetItems: [],
+        vaultTotal: 0, vaultTransactions: [],
+        currentLanguage: 'tr', currentTheme: 'light',
+        isTargetModalShown: false, activeTabId: 'birikim-tab',
+        lastSaveTime: 0,
+      },
+      elements: {}, 
+      
+      // GÜÇLENDİRİLMİŞ VERİ SAKLAMA (localForage KULLANILIYOR)
+      storage: {
+        _init() {
+            localforage.config({
+                name: 'yesilBankaBirikim',
+                storeName: 'app_data',
+                description: 'Yeşil Banka Birikim Uygulaması Verileri'
+            });
+        },
+        async get(key, defaultValue = null) {
+            try {
+                const value = await localforage.getItem(key);
+                return value !== null ? value : defaultValue;
+            } catch (err) {
+                console.error(`localForage 'get' error for key "${key}":`, err);
+                return defaultValue;
+            }
+        },
+        async set(key, value) {
+            try {
+                await localforage.setItem(key, value);
+            } catch (err) {
+                console.error(`localForage 'set' error for key "${key}":`, err);
+            }
+        },
+        async remove(key) {
+            try {
+                await localforage.removeItem(key);
+            } catch (err) {
+                console.error(`localForage 'remove' error for key "${key}":`, err);
+            }
+        },
+        async clearAllAppSpecific() {
+            try {
+                await localforage.clear();
+            } catch (err) {
+                console.error('localForage "clear" error:', err);
+            }
+        }
+      },
+
+      i18n: {
+        strings: {
+          tr: {
+            kasaUsdEquivalent: "USD Karşılığı", appRealTitle: "Yeşil Banka Birikim", birikimTab: "Birikim", kasaTab: "Kasa", butceTab: "Bütçe", islemlerTab: "İşlemler", ayarlarTab: "Ayarlar",
+            birikimSettingsTitle: "Birikim Ayarları", kasaTotalTitle: "Kasadaki Toplam Miktar", kasaHistoryTitle: "Kasa Transfer Geçmişi", generalSettingsTitle: "Genel Ayarlar", languageLabel: "Dil", themeLabel: "Tema",
+            dataManagementTitle: "Veri Yönetimi", resetTitle: "Sıfırlama İşlemleri", resetBirikimBtn: "Sadece Birikimi Sıfırla", resetAllBtn: "Tüm Veriyi Sıfırla", resetWarning: "Dikkat: Sıfırlama işlemleri geri alınamaz.",
+            toggleTheme: "Tema Değiştir", startAmountLabel: "Başlangıç Tutarı", startAmountPlaceholder: "0", targetAmountLabel: "Hedef Tutar", targetAmountPlaceholder: "100000", increaseAmountLabel: "Periyodik Artış", increaseAmountPlaceholder: "1000",
+            modeLabel: "Birikim Modu", monthlySavings: "Aylık", weeklySavings: "Haftalık", usdRateLabel: "USD Kuru", usdRatePlaceholder: "örn: 32.50", updateRateBtn: "Kuru Güncelle", saveAndStartBtn: "Kaydet & Başlat",
+            dateRangeTitle: "Tarih Aralığı ile Ek Katkı", startDateLabel: "Başlangıç Tarihi", endDateLabel: "Bitiş Tarihi", calculateRangeBtn: "Hesapla", saveRangeBtn: "Ekle", currentStatusTitle: "📈 Anlık Birikim", elapsedTime: "Geçen süre",
+            hourlyRateLabel: "Planlanan Saatlik Artış", manualAddLabel: "💵 Manuel Ekleme", tlAmountPlaceholder: "TL miktarı", addBtn: "Ekle", levelsTitle: "🏆 Seviyeler", nextLevelRemaining: "Sonraki seviyeye",
+            savingsTrendTitle: "📊 Birikim Trendi", budgetPlanningTitle: "💸 Bütçe Planlama (Aylık)", category: "Kategori", amountTL: "Miktar", actions: "Eylemler", categoryPlaceholder: "Ör: Tatil", amountPlaceholder: "Tutar", totalBudget: "Toplam Bütçe",
+            transactionHistoryTitle: "📜 Tüm İşlem Geçmişi", date: "Tarih", type: "Tip", description: "Açıklama", shareProgressBtn: "İlerlemeyi Paylaş", exportDataBtn: "Veriyi Dışa Aktar", congratsTitle: "🎉 Tebrikler!",
+            targetReachedMsg: "Birikim hedefinize ulaştınız! Yeni bir hedef belirlemek ister misiniz?", okBtn: "Tamam", fillAllFields: "Lütfen tüm zorunlu alanları doldurun!", invalidNumber: "Lütfen geçerli bir sayı girin.",
+            targetTooLow: "Hedef, başlangıçtan büyük olmalı.", systemStarted: "Birikim planı başlatıldı! 🚀", systemReset: "Tüm veriler silindi ve sıfırlandı.", usdRateUpdated: "USD kuru güncellendi! 💵",
+            usdRateApiUpdated: "USD kuru API'den güncellendi! 💵", usdRateApiError: "Hata: USD kuru API'den alınamadı.", manualAmountAdded: "➕ {amount} eklendi!", dateRangeInvalid: "Geçerli tarih aralığı seçin!",
+            dateRangeStartFirst: "Başlangıç, bitişten önce olmalı!", dateRangeSaved: "Tarih aralığı katkısı eklendi! 📅", themeChangedToDark: "Koyu tema aktif.", themeChangedToLight: "Açık tema aktif.", budgetCategoryAdded: "✅ {category}: {amount} bütçeye eklendi!",
+            budgetCategoryRemoved: "{category} bütçeden silindi.", transactionTypeManual: "Manuel Ekleme", transactionTypeQuick: "Hızlı Ekleme", transactionTypeInitial: "Başlangıç Tutarı", transactionTypeDateRange: "Tarih Aralığı Katkısı",
+            transactionTypeVaultTransfer: "Kasaya Transfer", dataExported: "Veriler 'yesilbanka_birikim_yedek.json' olarak indirildi.", noDataToExport: "Dışa aktarılacak veri yok.", confirmResetBirikimMsg: "Mevcut birikim planı sıfırlanacak (kasa ve diğer ayarlar etkilenmeyecek). Emin misiniz?",
+            confirmResetAllMsg: "TÜM VERİLER (kasa dahil) kalıcı olarak silinecek! Emin misiniz?", contributionCalculated: "Seçili aralık katkısı: {autoSave}", selectDateRangeFirst: "Önce tarih aralığı seçin!",
+            startSystemFirst: "Önce birikim planını başlatın!", invalidDateFormat: "Geçersiz tarih formatı!", endDateAfterStart: "Bitiş, başlangıçtan sonra olmalı!", saved: "Kaydedildi!", languageChanged: "Dil değiştirildi.",
+            quickAddAmount: "+{amount} TL", delete: "Sil", appTitle: "Yeşil Banka - Birikim Takip", transferToVaultBtn: "Kasaya Aktar", vaultTransferSuccess: "{amount} kasaya başarıyla aktarıldı!",
+            birikimResetForNewCycle: "Birikim sayacı yeni döngü için sıfırlandı.", noActiveBirikimToTransfer: "Kasaya aktarılacak aktif bir birikim bulunmuyor.", birikimPlanReset: "Birikim planı sıfırlandı."
+          },
+          en: { 
+            kasaUsdEquivalent: "USD Equivalent", appRealTitle: "Green Bank Savings", birikimTab: "Tracker", kasaTab: "Vault", butceTab: "Budget", islemlerTab: "Transactions", ayarlarTab: "Settings",
+            birikimSettingsTitle: "Tracker Settings", kasaTotalTitle: "Total in Vault", kasaHistoryTitle: "Vault Transfer History", generalSettingsTitle: "General Settings", languageLabel: "Language", themeLabel: "Theme",
+            dataManagementTitle: "Data Management", resetTitle: "Reset Actions", resetBirikimBtn: "Reset Tracker Only", resetAllBtn: "Reset All Data", resetWarning: "Warning: Reset actions cannot be undone.",
+            toggleTheme: "Toggle Theme", startAmountLabel: "Start Amount", startAmountPlaceholder: "0", targetAmountLabel: "Target Amount", targetAmountPlaceholder: "100000", increaseAmountLabel: "Periodic Increase", increaseAmountPlaceholder: "1000",
+            modeLabel: "Savings Mode", monthlySavings: "Monthly", weeklySavings: "Weekly", usdRateLabel: "USD Rate", usdRatePlaceholder: "e.g., 0.030", updateRateBtn: "Update Rate", saveAndStartBtn: "Save & Start",
+            dateRangeTitle: "Add. Contribution by Date Range", startDateLabel: "Start Date", endDateLabel: "End Date", calculateRangeBtn: "Calculate", saveRangeBtn: "Add", currentStatusTitle: "📈 Current Savings",
+            elapsedTime: "Elapsed time", hourlyRateLabel: "Planned Hourly Increase", manualAddLabel: "💵 Manual Add", tlAmountPlaceholder: "Amount", addBtn: "Add", levelsTitle: "🏆 Levels", nextLevelRemaining: "To next level",
+            savingsTrendTitle: "📊 Savings Trend", budgetPlanningTitle: "💸 Budget Planning (Monthly)", category: "Category", amountTL: "Amount", actions: "Actions", categoryPlaceholder: "E.g., Vacation", amountPlaceholder: "Amount",
+            totalBudget: "Total Budget", transactionHistoryTitle: "📜 All Transaction History", date: "Date", type: "Type", description: "Description", shareProgressBtn: "Share Progress", exportDataBtn: "Export Data", 
+            congratsTitle: "🎉 Congrats!", targetReachedMsg: "You've reached your savings target! Set a new one?", okBtn: "OK", fillAllFields: "Please fill all required fields!", invalidNumber: "Please enter a valid number.",
+            targetTooLow: "Target must be > start amount.", systemStarted: "Savings plan started! 🚀", systemReset: "All data cleared and reset.", usdRateUpdated: "USD rate updated! 💵", usdRateApiUpdated: "USD rate updated from API! 💵",
+            usdRateApiError: "Error: Could not fetch USD rate.", manualAmountAdded: "➕ {amount} added!", dateRangeInvalid: "Select a valid date range!", dateRangeStartFirst: "Start date must be before end date!", dateRangeSaved: "Date range contribution added! 📅",
+            themeChangedToDark: "Dark theme activated.", themeChangedToLight: "Light theme activated.", budgetCategoryAdded: "✅ {category}: {amount} added to budget!", budgetCategoryRemoved: "{category} removed from budget.",
+            transactionTypeManual: "Manual Add", transactionTypeQuick: "Quick Add", transactionTypeInitial: "Initial Amount", transactionTypeDateRange: "Date Range Contribution", transactionTypeVaultTransfer: "Transfer to Vault",
+            dataExported: "Data downloaded as 'greenbank_savings_backup.json'.", noDataToExport: "No data to export.", confirmResetBirikimMsg: "Current savings plan will be reset (vault and other settings will not be affected). Are you sure?",
+            confirmResetAllMsg: "ALL DATA (including vault) will be permanently deleted! Are you sure?", contributionCalculated: "Selected range contribution: {autoSave}", selectDateRangeFirst: "Select date range first!",
+            startSystemFirst: "Start a savings plan first!", invalidDateFormat: "Invalid date format!", endDateAfterStart: "End date must be after start!", saved: "Saved!", languageChanged: "Language changed.",
+            quickAddAmount: "+{amount} TRY", delete: "Delete", appTitle: "Green Bank - Savings Tracker", transferToVaultBtn: "Transfer to Vault", vaultTransferSuccess: "{amount} successfully transferred to vault!",
+            birikimResetForNewCycle: "Savings tracker reset for a new cycle.", noActiveBirikimToTransfer: "No active savings to transfer to vault.", birikimPlanReset: "Savings plan has been reset."
+          }
+        },
+        translate(key, params = {}) { 
+            let str = this.strings[SavingsTracker.state.currentLanguage]?.[key] || this.strings[SavingsTracker.CONFIG.DEFAULT_LANGUAGE]?.[key] || key;
+            for (const param in params) { str = str.replace(`{${param}}`, params[param]); }
+            return str;
+        },
+        applyTranslations() { 
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate'); const targetAttr = el.getAttribute('data-translate-attr');
+                const placeholderKey = el.getAttribute('data-translate-placeholder');
+                if (placeholderKey && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA')) { el.placeholder = this.translate(placeholderKey); }
+                if (targetAttr) { el.setAttribute(targetAttr, this.translate(key)); } 
+                else if (el.tagName === 'INPUT' && (el.type === 'button' || el.type === 'submit')) { el.value = this.translate(key); } 
+                else if (el.tagName === 'OPTION') { el.textContent = this.translate(key); } 
+                else { el.innerHTML = this.translate(key); } 
+            });
+            document.title = this.translate('appTitle');
+            if (SavingsTracker.state.chartInstance?.config?.data?.datasets?.length > 0) {
+                SavingsTracker.state.chartInstance.config.data.datasets[0].label = this.translate('amountTL');
+                SavingsTracker.state.chartInstance.update('none');
+            }
+            SavingsTracker.renderBudgetTable(); 
+            SavingsTracker.applyThemeButtonText(); 
+            SavingsTracker.updateUI(); 
+        }
+      },
+      
+      // TÜM FONKSİYONLAR ASENKRON (ASYNC) HALE GETİRİLDİ
+      async loadState() {
+        this.state.currentSavingData = await this.storage.get('currentSavingData');
+        this.state.transactions = await this.storage.get('transactions', []);
+        this.state.budgetItems = await this.storage.get('budgetItems', []);
+        this.state.vaultTotal = await this.storage.get('vaultTotal', 0);
+        this.state.vaultTransactions = await this.storage.get('vaultTransactions', []);
+        this.state.currentLanguage = await this.storage.get('currentLanguage', this.CONFIG.DEFAULT_LANGUAGE);
+        this.state.currentTheme = await this.storage.get('currentTheme', this.CONFIG.DEFAULT_THEME);
+        this.state.activeTabId = await this.storage.get('activeTabId', 'birikim-tab');
+
+        if (this.state.currentSavingData) {
+            this.state.isTargetModalShown = this.state.currentSavingData.targetReached || false;
+            this.elements.startAmount.value = this.state.currentSavingData.startAmount ?? '0';
+            this.elements.targetAmount.value = this.state.currentSavingData.targetAmount ?? '100000';
+            this.elements.increaseAmount.value = this.state.currentSavingData.increaseAmount ?? '1000';
+            this.elements.mode.value = this.state.currentSavingData.mode ?? 'monthly';
+            this.elements.usdRate.value = this.state.currentSavingData.usdRate ?? '';
+        } else {
+            this.elements.startAmount.value = '0';
+            this.elements.targetAmount.value = '100000';
+            this.elements.increaseAmount.value = '1000';
+            this.elements.mode.value = 'monthly';
+        }
+      },
+
+      async init() {
+        this.storage._init();
+        this.cacheDOMElements();
+        await this.loadState();
+        this.applyTheme();
+        this.applyLanguage();
+        this.initTabs();
+        this.bindEvents();
+
+        if (this.state.currentSavingData && typeof this.state.currentSavingData.startTime === 'number') {
+            this.elements.usdRate.value = this.state.currentSavingData.usdRate || '';
+            this.state.usdRate = this.state.currentSavingData.usdRate || 0;
+            this.startCounter();
+            await this.fetchAndUpdateUsdRate(false);
+        } else {
+            await this.fetchAndUpdateUsdRate(true);
+        }
+        await this.renderAllDynamicContent();
+      },
+
+      async saveAllState() { 
+        await this.storage.set('currentSavingData', this.state.currentSavingData);
+        await this.storage.set('transactions', this.state.transactions); 
+        await this.storage.set('budgetItems', this.state.budgetItems);
+        await this.storage.set('vaultTotal', this.state.vaultTotal); 
+        await this.storage.set('vaultTransactions', this.state.vaultTransactions);
+        this.state.lastSaveTime = Date.now();
+      },
+      async renderAllDynamicContent(){ 
+        this.renderBudgetTable(); 
+        this.renderTransactionHistory(); 
+        this.renderVaultTab(); 
+        await this.updateUI();
+      },
+      cacheDOMElements() { 
+        this.elements = {
+          languageSwitcher: document.getElementById('languageSwitcher'), themeToggleBtn: document.getElementById('themeToggleBtn'),
+          popupContainer: document.getElementById('popupContainer'), appTabs: document.getElementById('appTabs'),
+          startAmount: document.getElementById('startAmount'), targetAmount: document.getElementById('targetAmount'),
+          increaseAmount: document.getElementById('increaseAmount'), mode: document.getElementById('mode'),
+          usdRate: document.getElementById('usdRate'), startDate: document.getElementById('startDate'),
+          endDate: document.getElementById('endDate'), dateResult: document.getElementById('dateResult'),
+          currentAmountDisplay: document.getElementById('currentAmount'), usdValueDisplay: document.getElementById('usdValue'),
+          remainingTimeDisplay: document.getElementById('remainingTime'), 
+          hourlyRateDisplay: document.getElementById('hourlyRateDisplay'), 
+          progressBarElem: document.getElementById('progressBarElem'),
+          manualAmount: document.getElementById('manualAmount'), nextLevelText: document.getElementById('nextLevelText'),
+          levelProgressBar: document.getElementById('levelProgressBar'), badgeContainer: document.getElementById('badgeContainer'),
+          savingsChartCanvas: document.getElementById('savingsChart'),
+          startAmountError: document.getElementById('startAmountError'), targetAmountError: document.getElementById('targetAmountError'),
+          increaseAmountError: document.getElementById('increaseAmountError'),
+          kasaTotalAmountDisplay: document.getElementById('kasaTotalAmount'),
+          kasaUsdValue: document.getElementById('kasaUsdValue'), 
+          kasaHistoryTableBody: document.getElementById('kasaHistoryTable'),
+          budgetTableBody: document.getElementById('budgetTable'), newBudgetCategory: document.getElementById('newBudgetCategory'),
+          newBudgetAmount: document.getElementById('newBudgetAmount'), totalBudgetAmountDisplay: document.getElementById('totalBudgetAmount'),
+          transactionHistoryTableBody: document.getElementById('transactionHistoryTable'),
+        };
+      },
+      initTabs() { 
+        const tabTriggers = this.elements.appTabs.querySelectorAll('.nav-link');
+        tabTriggers.forEach(tabTriggerEl => {
+          tabTriggerEl.addEventListener('shown.bs.tab', async (event) => { 
+            this.state.activeTabId = event.target.id;
+            await this.storage.set('activeTabId', this.state.activeTabId);
+
+            switch(event.target.id) {
+                case 'birikim-tab':
+                    if (this.state.chartInstance) { setTimeout(() => this.state.chartInstance.resize(), 50); }
+                    await this.updateUI();
+                    break;
+                case 'kasa-tab': this.renderVaultTab(); break;
+                case 'butce-tab': this.renderBudgetTable(); break;
+                case 'islemler-tab': this.renderTransactionHistory(); break;
+            }
+          });
+        });
+        const activeTabEl = document.getElementById(this.state.activeTabId) || document.getElementById('birikim-tab');
+        if (activeTabEl) { 
+            const tab = new bootstrap.Tab(activeTabEl); 
+            tab.show(); 
+             switch(activeTabEl.id) {
+                case 'birikim-tab': this.updateUI(); break;
+                case 'kasa-tab': this.renderVaultTab(); break;
+                case 'butce-tab': this.renderBudgetTable(); break;
+                case 'islemler-tab': this.renderTransactionHistory(); break;
+            }
+        }
+      },
+      bindEvents() { 
+        this.elements.languageSwitcher.addEventListener('change', async (e) => {
+          this.state.currentLanguage = e.target.value; 
+          await this.storage.set('currentLanguage', this.state.currentLanguage);
+          this.i18n.applyTranslations(); this.showPopup(this.i18n.translate('languageChanged'), 'info');
+        });
+         window.addEventListener('beforeunload', () => {
+            if (this.state.currentSavingData) this.saveAllState();
+        });
+      },
+      applyLanguage() { 
+        this.elements.languageSwitcher.value = this.state.currentLanguage; this.i18n.applyTranslations();
+      },
+      applyTheme() { 
+          document.body.classList.toggle('dark-mode', this.state.currentTheme === 'dark');
+          this.applyThemeButtonText();
+          if (this.state.chartInstance) {
+              const isDark = this.state.currentTheme === 'dark';
+              const bodyStyles = getComputedStyle(document.body);
+              const chartFontColor = isDark ? bodyStyles.getPropertyValue('--app-dark-text') : bodyStyles.getPropertyValue('--app-text-color');
+              const chartGridColor = isDark ? 'rgba(200, 240, 208, 0.1)' : 'rgba(0, 77, 37, 0.1)';
+              const chartPrimaryColor = bodyStyles.getPropertyValue('--app-primary-green');
+
+              this.state.chartInstance.options.scales.x.ticks.color = chartFontColor;
+              this.state.chartInstance.options.scales.y.ticks.color = chartFontColor;
+              this.state.chartInstance.options.scales.x.grid.color = chartGridColor;
+              this.state.chartInstance.options.scales.y.grid.color = chartGridColor;
+              this.state.chartInstance.options.plugins.legend.labels.color = chartFontColor;
+              this.state.chartInstance.data.datasets[0].borderColor = chartPrimaryColor;
+              this.state.chartInstance.data.datasets[0].backgroundColor = chartPrimaryColor.replace(')',', 0.1)').replace('rgb','rgba');
+              this.state.chartInstance.update('none');
+          }
+      },
+      applyThemeButtonText() { 
+        const themeBtn = this.elements.themeToggleBtn;
+        if (themeBtn) { themeBtn.querySelector('i').className = this.state.currentTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                       themeBtn.querySelector('span').innerHTML = this.i18n.translate('toggleTheme'); }
+      },
+      async toggleTheme() { 
+        this.state.currentTheme = this.state.currentTheme === 'light' ? 'dark' : 'light';
+        await this.storage.set('currentTheme', this.state.currentTheme); this.applyTheme();
+        this.showPopup(this.state.currentTheme === 'light' ? this.i18n.translate('themeChangedToLight') : this.i18n.translate('themeChangedToDark'), 'info');
+      },
+      formatTL: (value) => { 
+        if (isNaN(parseFloat(value))) value = 0;
+        return new Intl.NumberFormat(SavingsTracker.state.currentLanguage === 'tr' ? 'tr-TR' : 'en-US', { style: 'currency', currency: 'TRY', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+      },
+      formatDate: (date) => {
+        if (!(date instanceof Date)) date = new Date(date);
+        return new Intl.DateTimeFormat(SavingsTracker.state.currentLanguage === 'tr' ? 'tr-TR' : 'en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(date);
+      },
+      showPopup: (msg, type = 'success', duration = 3000) => { 
+        const popupId = `popup-${Date.now()}`; const popupAlert = document.createElement('div');
+        popupAlert.className = `alert alert-${type} alert-dismissible fade show m-2 alert-popup`; popupAlert.setAttribute('role', 'alert'); popupAlert.id = popupId;
+        popupAlert.innerHTML = `${msg}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
+        SavingsTracker.elements.popupContainer.appendChild(popupAlert); 
+        const bsAlert = new bootstrap.Alert(popupAlert);
+        setTimeout(() => { if (document.getElementById(popupId)) { bsAlert.close();} }, duration);
+        popupAlert.addEventListener('closed.bs.alert', () => popupAlert.remove());
+      },
+      validateInputFields: () => { 
+        let isValid = true; 
+        const s = parseFloat(SavingsTracker.elements.startAmount.value); 
+        const t = parseFloat(SavingsTracker.elements.targetAmount.value); 
+        const i = parseFloat(SavingsTracker.elements.increaseAmount.value);
+        ['startAmountError', 'targetAmountError', 'increaseAmountError'].forEach(id => SavingsTracker.elements[id].textContent = '');
+        if (isNaN(s) || s < 0) { SavingsTracker.elements.startAmountError.textContent = SavingsTracker.i18n.translate('invalidNumber'); isValid = false; }
+        if (isNaN(t) || t <= 0) { SavingsTracker.elements.targetAmountError.textContent = SavingsTracker.i18n.translate('invalidNumber'); isValid = false; }
+        if (isNaN(i) || i < 0) { SavingsTracker.elements.increaseAmountError.textContent = SavingsTracker.i18n.translate('invalidNumber'); isValid = false; }
+        if (isValid && t <= s && t > 0) { SavingsTracker.elements.targetAmountError.textContent = SavingsTracker.i18n.translate('targetTooLow'); isValid = false; }
+        if (!SavingsTracker.elements.startAmount.value || !SavingsTracker.elements.targetAmount.value || !SavingsTracker.elements.increaseAmount.value) {
+            if (!SavingsTracker.elements.startAmount.value) SavingsTracker.elements.startAmountError.textContent = SavingsTracker.i18n.translate('fillAllFields');
+            if (!SavingsTracker.elements.targetAmount.value) SavingsTracker.elements.targetAmountError.textContent = SavingsTracker.i18n.translate('fillAllFields');
+            if (!SavingsTracker.elements.increaseAmount.value) SavingsTracker.elements.increaseAmountError.textContent = SavingsTracker.i18n.translate('fillAllFields');
+            isValid = false;
+        } 
+        return isValid;
+      },
+      async startSaving() { 
+        if (!this.validateInputFields()) return;
+        const s = parseFloat(this.elements.startAmount.value); 
+        const t = parseFloat(this.elements.targetAmount.value);
+        const i = parseFloat(this.elements.increaseAmount.value); 
+        const m = this.elements.mode.value;
+        const currentUsdRate = parseFloat(this.elements.usdRate.value) || this.state.usdRate || 0;
+        this.state.currentSavingData = { startAmount: s, targetAmount: t, increaseAmount: i, mode: m, startTime: Date.now(), usdRate: currentUsdRate, manualAddedTotal: 0, dateRangeContributionTotal: 0, lastElapsedTime: 0, targetReached: false, };
+        this.state.isTargetModalShown = false; 
+        if (s > 0) { this.addTransaction(s, this.i18n.translate('transactionTypeInitial') + " (Yeni Plan)", new Date(this.state.currentSavingData.startTime)); }
+        if (this.state.timer) clearInterval(this.state.timer);
+        this.startCounter(); 
+        this.showPopup(this.i18n.translate('systemStarted'));
+        await this.updateUI(); 
+        await this.saveAllState(); 
+      },
+      async confirmResetBirikim() { if (confirm(this.i18n.translate('confirmResetBirikimMsg'))) await this.resetBirikimTracker(true); },
+      async confirmResetAll() { if (confirm(this.i18n.translate('confirmResetAllMsg'))) await this.resetAllData(); },
+      async resetBirikimTracker(showPopupMessage = false) { 
+        if (this.state.timer) clearInterval(this.state.timer);
+        const oldPlanTarget = this.state.currentSavingData?.targetAmount; 
+        const oldIncrease = this.state.currentSavingData?.increaseAmount; 
+        const oldMode = this.state.currentSavingData?.mode;
+        const currentUsdRate = this.state.currentSavingData?.usdRate || this.state.usdRate || 0;
+        this.state.currentSavingData = { startAmount: 0, targetAmount: oldPlanTarget || 100000, increaseAmount: oldIncrease || 1000, mode: oldMode || 'monthly', startTime: Date.now(), usdRate: currentUsdRate, manualAddedTotal: 0, dateRangeContributionTotal: 0, lastElapsedTime: 0, targetReached: false, };
+        this.state.isTargetModalShown = false;
+        this.elements.startAmount.value = '0';
+        if(this.elements.manualAmount) this.elements.manualAmount.value = '';
+        if (showPopupMessage) this.showPopup(this.i18n.translate('birikimPlanReset'), 'info');
+        this.startCounter(); 
+        await this.updateUI();    
+        await this.saveAllState(); 
+      },
+      async resetAllData() { 
+        if (this.state.timer) clearInterval(this.state.timer); 
+        await this.storage.clearAllAppSpecific(); 
+        this.state.currentSavingData = null; this.state.transactions = []; this.state.budgetItems = []; this.state.vaultTotal = 0; this.state.vaultTransactions = []; this.state.badges = []; this.state.usdRate = 0; 
+        this.elements.usdRate.value = ''; this.state.isTargetModalShown = false;
+        if (this.state.chartInstance) { this.state.chartInstance.destroy(); this.state.chartInstance = null; }
+        await this.storage.remove('chartDataPoints');
+        this.elements.startAmount.value = ''; this.elements.targetAmount.value = ''; this.elements.increaseAmount.value = ''; this.elements.manualAmount.value = ''; this.elements.startDate.value = ''; this.elements.endDate.value = '';
+        if(this.elements.dateResult) this.elements.dateResult.innerHTML = '';
+        ['startAmountError', 'targetAmountError', 'increaseAmountError'].forEach(id => { if(this.elements[id]) this.elements[id].textContent = ''; });
+        this.showPopup(this.i18n.translate('systemReset'), 'info'); 
+        await this.renderAllDynamicContent(); 
+        if(this.elements.badgeContainer) this.elements.badgeContainer.innerHTML = '';
+        await this.fetchAndUpdateUsdRate(false); 
+      },
+      async transferToVault() {
+        if (!this.state.currentSavingData || typeof this.state.currentSavingData.startAmount !== 'number') { this.showPopup(this.i18n.translate('noActiveBirikimToTransfer'), 'warning'); return; }
+        const amountToTransfer = this.calculateCurrentTotalSavings();
+        if (amountToTransfer <= 0.009) { this.showPopup(this.i18n.translate('noActiveBirikimToTransfer'), 'warning'); return; }
+        this.state.vaultTotal += amountToTransfer;
+        const vaultTx = { date: new Date().toISOString(), amount: amountToTransfer };
+        this.state.vaultTransactions.unshift(vaultTx);
+        if (this.state.vaultTransactions.length > 200) this.state.vaultTransactions.pop();
+        this.addTransaction(amountToTransfer, this.i18n.translate('transactionTypeVaultTransfer'));
+        this.showPopup(this.i18n.translate('vaultTransferSuccess', {amount: this.formatTL(amountToTransfer)}));
+        this.renderVaultTab(); 
+        if (this.elements.kasaTotalAmountDisplay && amountToTransfer > 0) { this.elements.kasaTotalAmountDisplay.classList.add('flash-green-effect'); setTimeout(() => this.elements.kasaTotalAmountDisplay.classList.remove('flash-green-effect'), 700); }
+        await this.resetBirikimTracker(false); 
+        this.showPopup(this.i18n.translate('birikimResetForNewCycle'), 'info');
+      },
+      renderVaultTab() {
+        if(this.elements.kasaTotalAmountDisplay) this.elements.kasaTotalAmountDisplay.textContent = this.formatTL(this.state.vaultTotal);
+        this.renderVaultUsdDisplay(); 
+        if(this.elements.kasaHistoryTableBody) {
+            this.elements.kasaHistoryTableBody.innerHTML = '';
+             const sortedVaultTx = [...this.state.vaultTransactions].sort((a,b) => new Date(b.date) - new Date(a.date));
+            sortedVaultTx.forEach(tx => {
+            const row = this.elements.kasaHistoryTableBody.insertRow();
+            row.insertCell().textContent = this.formatDate(new Date(tx.date));
+            row.insertCell().textContent = this.formatTL(tx.amount);
+            });
+        }
+      },
+      renderVaultUsdDisplay() {
+        if (!this.elements.kasaUsdValue) return;
+        const usdText = this.i18n.translate('kasaUsdEquivalent');
+        if (this.state.usdRate > 0 && this.state.vaultTotal > 0) { this.elements.kasaUsdValue.textContent = `${usdText}: $${(this.state.vaultTotal / this.state.usdRate).toFixed(2)}`; } 
+        else { this.elements.kasaUsdValue.textContent = `${usdText}: -`; }
+      },
+      async fetchAndUpdateUsdRate(showPopupOnSuccess = true) { 
+          try {
+          const response = await fetch(this.CONFIG.API_URL_USD_TRY); if (!response.ok) throw new Error(`API Error: ${response.status}`);
+          const data = await response.json(); const newUsdRate = data.rates.TRY;
+          if (newUsdRate) {
+            const formattedRate = parseFloat(newUsdRate.toFixed(4));
+            this.elements.usdRate.value = formattedRate; this.state.usdRate = formattedRate;
+            if (this.state.currentSavingData) { this.state.currentSavingData.usdRate = this.state.usdRate; }
+            this.updateUsdDisplay(); this.renderVaultUsdDisplay(); 
+            if(showPopupOnSuccess) this.showPopup(this.i18n.translate('usdRateApiUpdated'));
+            await this.saveAllState();
+          }} catch (error) { console.error("USD rate API error:", error); if(showPopupOnSuccess) this.showPopup(this.i18n.translate('usdRateApiError'), 'danger');}
+      },
+      async updateUsdRateManually() { 
+          const manualRateStr = this.elements.usdRate.value.replace(',', '.');
+          const manualRate = parseFloat(manualRateStr);
+          if (isNaN(manualRate) || manualRate <= 0) { this.elements.usdRate.classList.add('is-invalid'); this.showPopup(this.i18n.translate('invalidNumber'), 'warning'); return; }
+          this.elements.usdRate.classList.remove('is-invalid'); this.elements.usdRate.value = manualRate.toFixed(4);
+          this.state.usdRate = manualRate;
+          if (this.state.currentSavingData) { this.state.currentSavingData.usdRate = this.state.usdRate; }
+          this.updateUsdDisplay(); this.renderVaultUsdDisplay(); this.showPopup(this.i18n.translate('usdRateUpdated')); 
+          await this.saveAllState();
+      },
+      updateUsdDisplay(currentAmountOverride) { 
+          const currentTL = currentAmountOverride !== undefined ? currentAmountOverride : (this.state.currentSavingData ? (this.calculateCurrentTotalSavings()) : 0);
+          const usdEquivalentText = this.i18n.translate('kasaUsdEquivalent').split(':')[0]; 
+          if (this.state.usdRate > 0 && currentTL > 0) { this.elements.usdValueDisplay.textContent = `${usdEquivalentText}: $${(currentTL / this.state.usdRate).toFixed(2)}`;}
+          else { this.elements.usdValueDisplay.textContent = `${usdEquivalentText}: -`; }
+      },
+      async addManualAmount() { 
+          if (!this.state.currentSavingData) { this.showPopup(this.i18n.translate('startSystemFirst'), 'warning'); return; }
+          const val = parseFloat(this.elements.manualAmount.value); if (isNaN(val) || val <= 0) { this.showPopup(this.i18n.translate('invalidNumber'), 'warning'); return; }
+          this.state.currentSavingData.manualAddedTotal = (this.state.currentSavingData.manualAddedTotal || 0) + val;
+          this.addTransaction(val, this.i18n.translate('transactionTypeManual'));
+          this.showPopup(this.i18n.translate('manualAmountAdded', {amount: this.formatTL(val)}));
+          this.elements.manualAmount.value = ''; 
+          await this.updateUI(); await this.saveAllState();
+      },
+      async quickAdd(amount) { 
+          if (!this.state.currentSavingData) { this.showPopup(this.i18n.translate('startSystemFirst'), 'warning'); return; }
+          this.state.currentSavingData.manualAddedTotal = (this.state.currentSavingData.manualAddedTotal || 0) + amount;
+          this.addTransaction(amount, `${this.i18n.translate('transactionTypeQuick')} (${this.formatTL(amount)})`);
+          this.showPopup(this.i18n.translate('manualAmountAdded', {amount: this.formatTL(amount)}));
+          await this.updateUI(); await this.saveAllState();
+      },
+      calculateContributionBetweenDatesLogic: () => { 
+          const startInput = SavingsTracker.elements.startDate.value; const endInput = SavingsTracker.elements.endDate.value;
+          if (!startInput || !endInput) { SavingsTracker.showPopup(SavingsTracker.i18n.translate('selectDateRangeFirst'), 'warning'); return null; }
+          const start = new Date(startInput); const end = new Date(endInput);
+          if (isNaN(start.getTime()) || isNaN(end.getTime())) { SavingsTracker.showPopup(SavingsTracker.i18n.translate('invalidDateFormat'), 'danger'); return null; }
+          if (end < start) { SavingsTracker.showPopup(SavingsTracker.i18n.translate('endDateAfterStart'), 'danger'); return null; }
+          if (!SavingsTracker.state.currentSavingData) { SavingsTracker.showPopup(SavingsTracker.i18n.translate('startSystemFirst'), 'warning'); return null; }
+          const data = SavingsTracker.state.currentSavingData; 
+          const increaseAmount = data.increaseAmount || 0; if(increaseAmount <= 0) return 0;
+          const seconds = (end - start) / 1000;
+          const perSecondIncrease = data.mode === 'monthly' ? increaseAmount / (30 * 86400) : increaseAmount / (7 * 86400);
+          return seconds * perSecondIncrease;
+      },
+      calculateContributionBetweenDates: () => { 
+          const autoSaveContribution = SavingsTracker.calculateContributionBetweenDatesLogic(); if (autoSaveContribution === null) return;
+          SavingsTracker.elements.dateResult.innerHTML = `<div class="alert alert-info mt-3"><h5>${new Date(SavingsTracker.elements.startDate.value).toLocaleDateString()} - ${new Date(SavingsTracker.elements.endDate.value).toLocaleDateString()}</h5><hr><p>${SavingsTracker.i18n.translate('contributionCalculated', { autoSave: SavingsTracker.formatTL(autoSaveContribution) })}</p></div>`;
+      },
+      async saveDateRangeContribution() { 
+          if (!this.state.currentSavingData) { this.showPopup(this.i18n.translate('startSystemFirst'), 'warning'); return; }
+          const contribution = this.calculateContributionBetweenDatesLogic();
+          if (contribution === null || contribution < 0) { if (contribution !== null) this.showPopup(this.i18n.translate('invalidNumber'), 'warning'); return; }
+          if (contribution === 0 && !confirm("Hesaplanan katkı 0 TL. Yine de eklemek istiyor musunuz?")) return;
+          this.state.currentSavingData.dateRangeContributionTotal = (this.state.currentSavingData.dateRangeContributionTotal || 0) + contribution;
+          this.addTransaction(contribution, this.i18n.translate('transactionTypeDateRange'));
+          this.showPopup(this.i18n.translate('dateRangeSaved')); 
+          this.elements.dateResult.innerHTML = ''; this.elements.startDate.value = ''; this.elements.endDate.value = '';
+          await this.updateUI(); await this.saveAllState();
+      },
+      startCounter: () => { 
+          if (!SavingsTracker.state.currentSavingData || typeof SavingsTracker.state.currentSavingData.startTime !== 'number') return;
+          if (SavingsTracker.state.timer) clearInterval(SavingsTracker.state.timer);
+          let prevAmount = SavingsTracker.calculateCurrentTotalSavings();
+          SavingsTracker.state.lastSaveTime = Date.now();
+          SavingsTracker.state.timer = setInterval(async () => {
+            if (!SavingsTracker.state.currentSavingData || typeof SavingsTracker.state.currentSavingData.startTime !== 'number') { clearInterval(SavingsTracker.state.timer); return; }
+            const currentTotal = SavingsTracker.calculateCurrentTotalSavings();
+            if (Math.abs(currentTotal - prevAmount) > 0.001) { SavingsTracker.elements.currentAmountDisplay.classList.add('flash-green-effect'); setTimeout(() => SavingsTracker.elements.currentAmountDisplay.classList.remove('flash-green-effect'), 700); }
+            prevAmount = currentTotal;
+            SavingsTracker.state.currentSavingData.lastElapsedTime = (Date.now() - (SavingsTracker.state.currentSavingData.startTime || Date.now())) / 1000;
+            await SavingsTracker.updateUI(currentTotal); 
+            if (Date.now() - SavingsTracker.state.lastSaveTime > SavingsTracker.CONFIG.SAVE_STATE_INTERVAL) { await SavingsTracker.saveAllState(); }
+          }, SavingsTracker.CONFIG.UPDATE_INTERVAL);
+      },
+      calculateCurrentTotalSavings: () => { 
+          if (!SavingsTracker.state.currentSavingData) return 0;
+          const data = SavingsTracker.state.currentSavingData; 
+          const elapsedSeconds = (Date.now() - data.startTime) / 1000;
+          const increaseAmount = data.increaseAmount || 0; let autoGeneratedAmount = 0;
+          if (increaseAmount > 0) { const perSecondIncrease = data.mode === 'monthly' ? increaseAmount / (30 * 86400) : increaseAmount / (7 * 86400); autoGeneratedAmount = elapsedSeconds * perSecondIncrease; }
+          return (data.startAmount || 0) + autoGeneratedAmount + (data.manualAddedTotal || 0) + (data.dateRangeContributionTotal || 0);
+      },
+      async updateUI(currentAmountOverride) { 
+          const data = this.state.currentSavingData;
+          if (!data && currentAmountOverride === undefined) {
+            this.elements.currentAmountDisplay.textContent = this.formatTL(0); this.updateUsdDisplay(0); this.updateProgress(0, 100000); this.updateTimeDisplay(0);
+            if (this.elements.hourlyRateDisplay) this.elements.hourlyRateDisplay.innerHTML = `${this.i18n.translate('hourlyRateLabel')}: -`;
+            this.elements.nextLevelText.innerHTML = `${this.i18n.translate('nextLevelRemaining')}: -`;
+            if (this.elements.levelProgressBar) { this.elements.levelProgressBar.style.width = `0%`; this.elements.levelProgressBar.setAttribute('aria-valuenow', 0); }
+            if (this.elements.progressBarElem) { this.elements.progressBarElem.setAttribute('aria-valuenow', 0); this.elements.progressBarElem.style.width = `0%`; this.elements.progressBarElem.textContent = `0%`; }
+            await this.updateChart(0); return;
+          }
+          const currentTotal = currentAmountOverride !== undefined ? currentAmountOverride : this.calculateCurrentTotalSavings();
+          const targetAmount = data?.targetAmount || 100000;
+          const lastElapsedTime = data?.lastElapsedTime || 0;
+          this.elements.currentAmountDisplay.textContent = this.formatTL(currentTotal);
+          this.updateUsdDisplay(currentTotal); await this.updateProgress(currentTotal, targetAmount);
+          const elapsedSeconds = lastElapsedTime > 0 ? lastElapsedTime : ((Date.now() - (data?.startTime || Date.now())) / 1000);
+          this.updateTimeDisplay(elapsedSeconds); 
+          if (this.elements.hourlyRateDisplay) {
+            let hourlyRate = 0; const periodicIncrease = data?.increaseAmount || 0;
+            if (periodicIncrease > 0) { hourlyRate = (data.mode === 'monthly') ? periodicIncrease / (30 * 24) : periodicIncrease / (7 * 24); }
+            if (hourlyRate > 0) { this.elements.hourlyRateDisplay.innerHTML = `${this.i18n.translate('hourlyRateLabel')}: ${this.formatTL(hourlyRate)}/saat`; } 
+            else { this.elements.hourlyRateDisplay.innerHTML = `${this.i18n.translate('hourlyRateLabel')}: -`; }
+          }
+          this.checkLevels(currentTotal); await this.updateChart(currentTotal);
+      },
+      async updateProgress(current, target) { 
+          const percent = target > 0 ? Math.min((current / target) * 100, 100) : 0;
+          if (this.elements.progressBarElem) { this.elements.progressBarElem.style.width = `${percent}%`; this.elements.progressBarElem.textContent = `${Math.floor(percent)}%`; this.elements.progressBarElem.setAttribute('aria-valuenow', Math.floor(percent)); }
+          if (percent >= 100 && this.state.currentSavingData && !this.state.currentSavingData.targetReached && !this.state.isTargetModalShown) {
+            const targetModalEl = document.getElementById('targetModal');
+            if (targetModalEl) { bootstrap.Modal.getOrCreateInstance(targetModalEl).show(); }
+            this.state.currentSavingData.targetReached = true; this.state.isTargetModalShown = true; 
+            await this.saveAllState();
+          }
+      },
+      updateTimeDisplay: (seconds) => { 
+          const d = Math.floor(seconds / 86400); const h = Math.floor((seconds % 86400) / 3600);
+          const m = Math.floor((seconds % 3600) / 60); const s = Math.floor(seconds % 60);
+          if (SavingsTracker.elements.remainingTimeDisplay) { SavingsTracker.elements.remainingTimeDisplay.innerHTML = `⏳ <span data-translate="elapsedTime">${SavingsTracker.i18n.translate('elapsedTime')}</span>: ${d}g ${h}s ${m}d ${s}sn`; }
+      },
+      checkLevels: (current) => { 
+          if (!SavingsTracker.elements.badgeContainer || !SavingsTracker.elements.nextLevelText || !SavingsTracker.elements.levelProgressBar) return;
+          const level = Math.floor(current / SavingsTracker.CONFIG.LEVEL_GAP); 
+          const currentBadgeCount = SavingsTracker.elements.badgeContainer.children.length;
+          if (level !== currentBadgeCount) {
+            SavingsTracker.elements.badgeContainer.innerHTML = '';
+            for (let i = 1; i <= level; i++) {
+                const levelAmount = i * SavingsTracker.CONFIG.LEVEL_GAP; const badge = document.createElement('span'); 
+                badge.className = 'badge me-2 mb-2'; badge.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--app-primary-green'); 
+                badge.style.color = getComputedStyle(document.body).getPropertyValue('--app-white'); badge.textContent = `🏅 ${SavingsTracker.formatTL(levelAmount)}`;
+                badge.style.animation = `fadeInRow 0.5s ease-out ${i * 0.05}s backwards`; SavingsTracker.elements.badgeContainer.appendChild(badge); 
+            }
+          }
+          const nextLevelTarget = (level + 1) * SavingsTracker.CONFIG.LEVEL_GAP;
+          const remainingForNextLevel = Math.max(0, nextLevelTarget - current);
+          let progressToNextLevelPercent = (SavingsTracker.CONFIG.LEVEL_GAP > 0 && current < nextLevelTarget) ? ((current - (level * SavingsTracker.CONFIG.LEVEL_GAP)) / SavingsTracker.CONFIG.LEVEL_GAP) * 100 : 100;
+          SavingsTracker.elements.nextLevelText.innerHTML = `${SavingsTracker.i18n.translate('nextLevelRemaining')}: ${SavingsTracker.formatTL(remainingForNextLevel)}`;
+          SavingsTracker.elements.levelProgressBar.style.width = `${progressToNextLevelPercent}%`; SavingsTracker.elements.levelProgressBar.setAttribute('aria-valuenow', progressToNextLevelPercent);
+      },
+      async updateChart(current) { 
+          if(!this.elements.savingsChartCanvas) return;
+          const ctx = this.elements.savingsChartCanvas.getContext('2d');
+          const chartDataPoints = await this.storage.get('chartDataPoints', []) || [];
+          const now = new Date(); const lastPoint = chartDataPoints.length > 0 ? chartDataPoints[chartDataPoints.length - 1] : null;
+          if (!lastPoint || (now.getTime() - new Date(lastPoint.x).getTime() > 5000) || Math.abs(lastPoint.y - current) > (this.state.currentSavingData?.increaseAmount * 0.005 || 0.5) ) { chartDataPoints.push({ x: now, y: current }); }
+          while (chartDataPoints.length > this.CONFIG.CHART_MAX_DATAPOINTS) chartDataPoints.shift();
+          await this.storage.set('chartDataPoints', chartDataPoints);
+          const isDark = this.state.currentTheme === 'dark'; const bodyStyles = getComputedStyle(document.body);
+          const chartFontColor = isDark ? bodyStyles.getPropertyValue('--app-dark-text') : bodyStyles.getPropertyValue('--app-text-color');
+          const chartGridColor = isDark ? 'rgba(200, 240, 208, 0.15)' : 'rgba(0, 77, 37, 0.1)'; 
+          const chartPrimaryColor = bodyStyles.getPropertyValue('--app-primary-green');
+          if (this.state.chartInstance) {
+            this.state.chartInstance.data.datasets[0].data = chartDataPoints; this.state.chartInstance.options.scales.x.ticks.color = chartFontColor;
+            this.state.chartInstance.options.scales.y.ticks.color = chartFontColor; this.state.chartInstance.options.scales.x.grid.color = chartGridColor; this.state.chartInstance.options.scales.y.grid.color = chartGridColor;
+            this.state.chartInstance.options.plugins.legend.labels.color = chartFontColor; this.state.chartInstance.data.datasets[0].borderColor = chartPrimaryColor; this.state.chartInstance.data.datasets[0].backgroundColor = chartPrimaryColor.replace(')',', 0.2)').replace('rgb','rgba'); 
+            this.state.chartInstance.options.plugins.tooltip.backgroundColor = isDark ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.9)'; this.state.chartInstance.options.plugins.tooltip.titleColor = chartFontColor; this.state.chartInstance.options.plugins.tooltip.bodyColor = chartFontColor;
+            this.state.chartInstance.update('none'); 
+          } else {
+            this.state.chartInstance = new Chart(ctx, { type: 'line', data: { datasets: [{ label: this.i18n.translate('amountTL'), data: chartDataPoints, borderColor: chartPrimaryColor, backgroundColor: chartPrimaryColor.replace(')',', 0.2)').replace('rgb','rgba'), fill: true, tension: 0.3, pointRadius: 1, pointHoverRadius: 6, borderWidth: 1.5 }] }, 
+              options: { responsive: true, maintainAspectRatio: false, animation: { duration: 400, easing: 'easeInOutQuad' }, scales: { x: { type: 'time', time: { unit: 'minute', tooltipFormat: 'PP HH:mm', displayFormats: {'minute': 'HH:mm'} }, ticks: { color: chartFontColor, source: 'auto', maxRotation: 0, autoSkip: true, padding: 10, font: {size: 10} }, grid: { color: chartGridColor, drawBorder: false } },  y: { beginAtZero: false, ticks: { color: chartFontColor, callback: (value) => this.formatTL(value).replace(/\s*TRY\s*$/, ''), padding: 10, font: {size: 10} }, grid: { color: chartGridColor, drawBorder: false, borderDash: [2,3] } } },
+                plugins: { legend: { labels: { color: chartFontColor, usePointStyle: true, boxWidth: 8, font: {size: 11} }, align: 'end' }, tooltip: { callbacks: { label: (context) => `${context.dataset.label}: ${this.formatTL(context.raw.y)}` }, bodyFont: {size: 13}, titleFont: {size: 11}, backgroundColor: isDark ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.9)', titleColor: chartFontColor, bodyColor: chartFontColor, borderColor: chartPrimaryColor, borderWidth:1, padding: 10, displayColors: false } } 
+              }
+            });
+          }
+      },
+      shareProgress: () => { 
+          if (!SavingsTracker.state.currentSavingData) { SavingsTracker.showPopup(SavingsTracker.i18n.translate('startSystemFirst'), 'warning'); return; }
+          const currentText = SavingsTracker.elements.currentAmountDisplay.textContent; const percentText = SavingsTracker.elements.progressBarElem.textContent;
+          const text = `Birikim hedefimde ${currentText} (${percentText}) seviyesindeyim! 💰 #YesilBankaBirikim`;
+          window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+      },
+      async addBudgetRow() { 
+          const category = this.elements.newBudgetCategory.value.trim(); const amount = parseFloat(this.elements.newBudgetAmount.value);
+          if (!category || isNaN(amount) || amount <= 0) { this.showPopup(this.i18n.translate('fillAllFields'), 'warning'); return; }
+          const newItem = { id: Date.now(), category, amount }; this.state.budgetItems.push(newItem);
+          const row = this.elements.budgetTableBody.insertRow(); row.dataset.budgetId = newItem.id;
+          row.insertCell().textContent = newItem.category; row.insertCell().textContent = this.formatTL(newItem.amount);
+          const deleteBtnCell = row.insertCell(); const deleteBtn = document.createElement('button'); 
+          deleteBtn.className = 'btn btn-danger btn-sm w-100'; deleteBtn.innerHTML = `<i class="fas fa-trash-alt"></i> <span class="d-none d-md-inline">${this.i18n.translate('delete')}</span>`;
+          deleteBtn.onclick = () => this.removeBudgetRow(newItem.id); deleteBtnCell.appendChild(deleteBtn); row.classList.add('budget-row-enter'); 
+          this.updateTotalBudgetAmount(); this.showPopup(this.i18n.translate('budgetCategoryAdded', { category: category, amount: this.formatTL(amount) }));
+          this.elements.newBudgetCategory.value = ''; this.elements.newBudgetAmount.value = ''; await this.saveAllState();
+      },
+      async removeBudgetRow(id) { 
+          const rowIndex = this.state.budgetItems.findIndex(item => item.id === id); if (rowIndex === -1) return;
+          const itemRemoved = this.state.budgetItems[rowIndex];
+          const rowElement = this.elements.budgetTableBody.querySelector(`tr[data-budget-id='${id}']`);
+          if (rowElement) {
+            rowElement.classList.add('budget-row-exit');
+            setTimeout(async () => {
+              rowElement.remove(); this.state.budgetItems.splice(rowIndex, 1);
+              this.updateTotalBudgetAmount(); await this.saveAllState();
+              this.showPopup(this.i18n.translate('budgetCategoryRemoved', {category: itemRemoved.category }), 'info');
+            }, 400); 
+          } else { 
+            this.state.budgetItems.splice(rowIndex, 1); this.renderBudgetTable(); await this.saveAllState();
+            this.showPopup(this.i18n.translate('budgetCategoryRemoved', {category: itemRemoved.category }), 'info');
+          }
+      },
+      renderBudgetTable: () => { 
+          if(!SavingsTracker.elements.budgetTableBody) return; this.elements.budgetTableBody.innerHTML = ''; 
+          this.state.budgetItems.forEach(item => {
+            const row = this.elements.budgetTableBody.insertRow(); row.dataset.budgetId = item.id; 
+            row.insertCell().textContent = item.category; row.insertCell().textContent = this.formatTL(item.amount);
+            const deleteBtnCell = row.insertCell(); const deleteBtn = document.createElement('button'); 
+            deleteBtn.className = 'btn btn-danger btn-sm w-100'; deleteBtn.innerHTML = `<i class="fas fa-trash-alt"></i> <span class="d-none d-md-inline">${this.i18n.translate('delete')}</span>`;
+            deleteBtn.onclick = () => this.removeBudgetRow(item.id); deleteBtnCell.appendChild(deleteBtn);
+          });
+          this.updateTotalBudgetAmount();
+      },
+      updateTotalBudgetAmount: () => {
+        let totalBudget = 0; this.state.budgetItems.forEach(item => totalBudget += item.amount);
+        if (this.elements.totalBudgetAmountDisplay) { this.elements.totalBudgetAmountDisplay.textContent = this.formatTL(totalBudget); }
+      },
+      addTransaction: (amount, type, date = new Date(), description = '') => { 
+          if (typeof amount !== 'number' || isNaN(amount)) { console.error("Invalid transaction amount:", amount); return; }
+          const transaction = { id: Date.now(), date: date.toISOString(), amount: amount, type: type, description: description || type };
+          this.state.transactions.unshift(transaction); 
+          if (this.state.transactions.length > 200) this.state.transactions.pop();
+          this.renderTransactionHistory(); 
+      },
+      renderTransactionHistory: () => { 
+          if(!this.elements.transactionHistoryTableBody) return; this.elements.transactionHistoryTableBody.innerHTML = '';
+          const sortedTransactions = [...this.state.transactions].sort((a,b) => new Date(b.date) - new Date(a.date));
+          sortedTransactions.forEach(tx => {
+            const row = this.elements.transactionHistoryTableBody.insertRow();
+            row.insertCell().textContent = this.formatDate(new Date(tx.date)); row.insertCell().textContent = tx.type; 
+            row.insertCell().textContent = this.formatTL(tx.amount); row.insertCell().textContent = tx.description; 
+          });
+      },
+      async exportData() { 
+        const chartDataPoints = await this.storage.get('chartDataPoints') || [];
+        const dataToExport = { currentSavingData: this.state.currentSavingData, transactions: this.state.transactions, budgetItems: this.state.budgetItems, vaultTotal: this.state.vaultTotal, vaultTransactions: this.state.vaultTransactions, language: this.state.currentLanguage, theme: this.state.currentTheme, activeTabId: this.state.activeTabId, chartDataPoints: chartDataPoints };
+        const hasData = Object.values(dataToExport).some(value => { if (Array.isArray(value)) return value.length > 0; if (typeof value === 'object' && value !== null) return Object.keys(value).length > 0; return value !== undefined && value !== null && value !== 0; });
+        if (!hasData) { this.showPopup(this.i18n.translate('noDataToExport'), 'warning'); return; }
+        const jsonString = JSON.stringify(dataToExport, null, 2); const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob); const a = document.createElement('a');
+        a.href = url; a.download = 'yesilbanka_birikim_yedek.json'; document.body.appendChild(a); a.click();
+        document.body.removeChild(a); URL.revokeObjectURL(url); this.showPopup(this.i18n.translate('dataExported'), 'info');
+      },
+    };
+
+    window.onload = () => SavingsTracker.init();
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').then(registration => {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, err => {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
